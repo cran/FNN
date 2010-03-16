@@ -1,0 +1,4 @@
+#ANN 1.1.2
+#PKG_LIBS = -Llib -lmgwANN
+PKG_CPPFLAGS = -Iinclude
+PKG_LIBS =

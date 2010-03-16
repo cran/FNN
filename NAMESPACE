@@ -1,0 +1,10 @@
+##Load dynamic library
+useDynLib(FNN, get_KNN_kd, get_KNN_cover, get_KNNX_kd, get_KNNX_VR, KNNentropy, KL_dist, KLD_dist)
+
+#Export directive
+
+#functions
+export(get.knn, knn.dist, knn.index,
+get.knnx, knnx.dist, knnx.index,  KL.dist, KLD.dist,
+knn, knn.cv, knn.reg
+)

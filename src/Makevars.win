@@ -1,0 +1,7 @@
+#ANN 1.1.2
+#undefine WIN32 is necessary
+#PKG_LIBS = -Llib -lmgwANN
+PKG_CPPFLAGS = -Iinclude -UWIN32
+PKG_LIBS =
+
+
