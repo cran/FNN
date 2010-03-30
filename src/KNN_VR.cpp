@@ -55,7 +55,8 @@ void get_KNN_VR(
     for (int i = 0; i < n; i++) {
   		kn = kinit;
   		for (int k = 0; k < kn; k++)	nndist[k] = 0.99 * DBL_MAX;
-  		for (int j = 0; j < n; j++){  
+  		for (int j = 0; j < n; j++){ 
+          if(j == i) continue; //no self-match allowed 
   	    	dist = 0.0;
   	    	for (int k = 0; k < d; k++) {
     				tmp = train[i + k * n] - train[j + k * n];
@@ -81,7 +82,7 @@ void get_KNN_VR(
   		}
   												
   		for (int k = 0; k < kinit; k++){		/*return distances and indice - Shengqiao Li*/
-  			nn_dist[i*kinit+k] = nndist[k];			
+  			nn_dist[i*kinit+k] = sqrt(nndist[k]);			
   			nn_idx[i*kinit+k] = pos[k]+1;	
   		}									/*Done for return distances and indice		*/		 
 
@@ -290,8 +291,8 @@ void VR_knnr(const int *kin, 		//k
 			 double *res, 			//prediction
 			 const int *cv, 		//boolean
 			 const int *use_all, 	//boolean
-       		 int   *nn_idx,         //indice of neighbors
-       		 double *nn_dist        //distances of neighbors
+ 		   int   *nn_idx,         //indice of neighbors
+       double *nn_dist        //distances of neighbors
 			 )
 {
     int   j, k, k1, kinit = *kin, kn, npat,
@@ -339,11 +340,10 @@ void VR_knnr(const int *kin, 		//k
 		}
 
 		for (k = 0; k < kinit; k++){		/*return distances and indice - Shengqiao Li*/
-			nn_dist[k*nte+npat]= nndist[k];			
+			nn_dist[k*nte+npat]= sqrt(nndist[k]);			
 			nn_idx[k*nte+npat]=pos[k]+1;	
 		}									/*Done for return distances and indice		*/		 
-	
-	
+
 		res[npat] = 0;
 		if (*use_all) {
 	    	for (j = 0; j < kinit; j++)	res[npat] += Y[pos[j]];

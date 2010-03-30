@@ -1,5 +1,3 @@
-
-
 \name{knn.cv}
 \alias{knn.cv}
 
@@ -37,7 +35,10 @@ is decided by majority vote, with ties broken at random. If there are ties for t
 }
 \value{
 factor of classifications of training set. \code{doubt} will be returned as \code{NA}.
+distances and indice of k nearest neighbors are also returned as attributes.
 }
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+
 \references{
   Ripley, B. D. (1996)
   \emph{Pattern Recognition and Neural Networks.} Cambridge.
@@ -45,20 +46,16 @@ factor of classifications of training set. \code{doubt} will be returned as \cod
   Venables, W. N. and Ripley, B. D. (2002)
   \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
 }
-\note{
-  The \dQuote{VR} code is adopted from package \code{class}.
-  Here distances and indice of k nearest neighbors are also returned.
 
-}
 \seealso{
 \code{\link{knn}} and \code{\link[class]{knn.cv}} in \pkg{class}.
 }
 \examples{
-data(iris3)
-train <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
-cl <- factor(c(rep("s",50), rep("c",50), rep("v",50)))
-knn.cv(train, cl, k = 3, prob = TRUE)
-attributes(.Last.value)
+  data(iris3)
+  train <- rbind(iris3[,,1], iris3[,,2], iris3[,,3])
+  cl <- factor(c(rep("s",50), rep("c",50), rep("v",50)))
+  knn.cv(train, cl, k = 3, prob = TRUE)
+  attributes(.Last.value)
 }
 \keyword{classif}
 \keyword{nonparametric}

@@ -15,7 +15,7 @@ knn.reg(train, test = NULL, y, k = 3, use.all = FALSE,
 }
   \item{test}{
   matrix or data frame of test set cases. A vector will be interpreted
-  as a row vector for a single case.
+  as a row vector for a single case. If not supplied, cross-validataion will be done.
 }
   \item{y}{reponse of each observation in the training set.}
   \item{k}{ number of neighbours considered.}
@@ -29,7 +29,20 @@ knn.reg(train, test = NULL, y, k = 3, use.all = FALSE,
   If test is not supplied, Leave one out cross-validation is performed and \emph{R-square} is the predicted R-square.
 }
 \value{
-  A list with a vector of predicted values for the testing dataset.
+
+\code{knn.reg} returns an object of \code{class} \code{"knnReg"} or \code{"knnRegCV"} 
+if \code{test} data is not supplied.
+
+The returnedobject is a list containing at least the following components:
+
+  \item{call}{the match call.}
+  \item{k}{number of neighbours considered.}
+  \item{n}{number of predicted values, either equals test size or train size.}
+  \item{pred}{a vector of predicted values.}
+  \item{residuals}{predicted residuals. \code{NULL} if \code{test} is supplied.}
+  \item{PRESS}{the sums of squares of the predicted residuals. \code{NULL} if \code{test} is supplied.}
+  \item{R2Pred}{predicted R-square. \code{NULL} if \code{test} is supplied.}
+ 
 }
 \seealso{
  \code{\link{knn}}.
@@ -46,9 +59,8 @@ knn.reg(train, test = NULL, y, k = 3, use.all = FALSE,
     pac.knn.VR<- knn.reg(PAC$X, y=PAC$y, k=3, algorith="VR");
     
     plot(PAC$y, pac.knn$pred, xlab="y", ylab=expression(hat(y)))
-    points(PAC$y, pac.knn.VR$pred, col=3);
-  }  
-
+    points(PAC$y, pac.knn.VR$pred, col=2, pch=3);
+  } 
 }
 
 \keyword{regression}

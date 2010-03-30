@@ -38,10 +38,9 @@ factor of classifications of test set. \code{doubt} will be returned as \code{NA
 }
 \author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
 \references{
-  Ripley, B. D. (1996)
-  \emph{Pattern Recognition and Neural Networks.} Cambridge.
+  B.D. Ripley (1996). \emph{Pattern Recognition and Neural Networks.} Cambridge.
 
-  Venables, W. N. and Ripley, B. D. (2002)
+  M.N. Venables and B.D. Ripley (2002)
   \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
 }
 \note{
@@ -53,12 +52,12 @@ factor of classifications of test set. \code{doubt} will be returned as \code{NA
   \code{\link{knn.cv}}   and \code{\link[class]{knn}} in \pkg{class}.
 }
 \examples{
-data(iris3)
-train <- rbind(iris3[1:25,,1], iris3[1:25,,2], iris3[1:25,,3])
-test <- rbind(iris3[26:50,,1], iris3[26:50,,2], iris3[26:50,,3])
-cl <- factor(c(rep("s",25), rep("c",25), rep("v",25)))
-knn(train, test, cl, k = 3, prob=TRUE)
-attributes(.Last.value)
+    data(iris3)
+    train <- rbind(iris3[1:25,,1], iris3[1:25,,2], iris3[1:25,,3])
+    test <- rbind(iris3[26:50,,1], iris3[26:50,,2], iris3[26:50,,3])
+    cl <- factor(c(rep("s",25), rep("c",25), rep("v",25)))
+    knn(train, test, cl, k = 3, prob=TRUE)
+    attributes(.Last.value)
 }
 \keyword{classif}
 \keyword{nonparametric}

@@ -2,14 +2,11 @@
 #define LABEL_VECTOR_H
 
 typedef float* vector;
-float distance_vector(vector v1, vector v2, float upper_bound);
-
 class label_vector{
 	public:
 	int label;
-	vector coord;
+  vector coord;
 };
-
 class Id_dist  
 {
   public:
@@ -24,6 +21,5 @@ class Id_dist
      
 };
 bool operator < ( const Id_dist &a, const Id_dist &b);
-
 float distance(label_vector v1, label_vector v2, float upper_bound);
 #endif

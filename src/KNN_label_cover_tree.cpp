@@ -12,20 +12,18 @@
 #include <algorithm>
 #include <R.h>       // R header
 
-extern int point_len; //declared in label_vector.h
-
-//Assumption: points are a multiples of 8 long, otherwise zero-pad
+extern int dim; //declared in label_vector.h
 v_array<label_vector> copy_points(const double* data, int n, int d)
 {
   v_array<label_vector> parsed;
  
-  if(d%8 > 0) point_len = (d/8 + 1)*8;
-  else point_len = d;
-
+  dim = d;
   //float *coord = (float*)Calloc(n*point_len, float);
   //auto-initialize to 0, but  need Free by user 
   
-   float *coord = (float*)R_alloc(n*point_len, sizeof(float));
+  float *coord = (float*)R_alloc(n*d, sizeof(float));
+	if(coord==NULL) error("Cannot allocate memroy for a vector of %d!\n", n*d);
+  
   // not initialize to 0 
 
   int j;
@@ -34,11 +32,9 @@ v_array<label_vector> copy_points(const double* data, int n, int d)
       label_vector label_p;
       
       label_p.label = i;  //labels: 0 to n-1  Shengqiao Li      
-      label_p.coord =  coord + i*point_len;
-      j=0;
-      for(;j<d; j++)  label_p.coord[j] = (float)data[j*n+i];             
-      for(;j<point_len; j++) label_p.coord[j] = (float)(0.0); //zero-padding
+      label_p.coord =  coord + i*d;
       
+      for(j=0; j<d; j++)  label_p.coord[j] = (float)data[j*n+i];
       push(parsed, label_p);             
   }
   return parsed;
@@ -51,10 +47,9 @@ void get_KNN_dist_cover(const double *data, const int *k,
                         double *nn_dist)
 //only distance. may faster
 {
-
-	int	d=*dim;		// Actual Dimension
-	int n=*n_pts;	// Number of Data points
-	int	numNN = *k + 1;		// Max. num of NN including self
+	const int	d=*dim;		// Actual Dimension
+	const int n=*n_pts;	// Number of Data points
+	const int	K = *k + 1;		// Max. num of NN including self
 	int ptr;
 
   v_array<label_vector>  data_pts = copy_points(data, n, d);
@@ -63,7 +58,7 @@ void get_KNN_dist_cover(const double *data, const int *k,
   node<label_vector> top_query = batch_create(data_pts);
 
   v_array<v_array<label_vector> > res;
-  k_nearest_neighbor(top, top, res, numNN);
+  k_nearest_neighbor(top, top, res, K);
 
   for (int i = 0; i < n; i++)
   {	
@@ -76,7 +71,7 @@ void get_KNN_dist_cover(const double *data, const int *k,
   		
 	    ptr = res[i][0].label*(*k); //searching is not in order. Reoder.  Shengqiao Li 3/12/2010
   
-      for (int j = 1; j < numNN; j++)
+      for (int j = 1; j < K; j++) //discard distance to itself
  	    {
   	    	nn_dist[ptr] = dist[j];	
   			  ptr++;
@@ -90,9 +85,9 @@ void get_KNN_cover(const double *data, const int *k,
                   const int *dim, const int *n_pts,
                   int *nn_idx, double *nn_dist)
 {
-	int	d=*dim;		// Actual Dimension
-	int n=*n_pts;	// Number of Data points
-	int	numNN = *k + 1;		// Max. num of NN including self
+	const int	d=*dim;		// Actual Dimension
+	const int n=*n_pts;	// Number of Data points
+	const int	K = *k + 1;		// Max. num of NN including self
 	int ptr;
  
   v_array<v_array<label_vector> > res;
@@ -100,7 +95,7 @@ void get_KNN_cover(const double *data, const int *k,
 	v_array<label_vector>  data_pts = copy_points(data, n, d);
   node<label_vector> top = batch_create(data_pts);
   
-  k_nearest_neighbor(top, top, res, numNN);
+  k_nearest_neighbor(top, top, res, K);
    
   for (int i = 0; i < n; i++)
   {	
@@ -114,7 +109,7 @@ void get_KNN_cover(const double *data, const int *k,
 
       sort(dist.begin(), dist.end()); 
           
-    	for (int j = 1; j < numNN; j++)
+    	for (int j = 1; j < K; j++)  //discard itself
     	{
           nn_idx[ptr] = dist[j].id;	
     	  	nn_dist[ptr] = dist[j].dist;
@@ -130,11 +125,10 @@ void get_KNNX_cover(const double *data, const double *query,
                     const int *n_pts, int* m_pts, 
                     int *nn_idx, double *nn_dist)
 {
-	int	d=*dim;		// Actual Dimension
-	int n=*n_pts;	// Number of Data points
-	int m=*m_pts;	// Number of Query  points
-	
-	int	numNN = *k + 1;		// Max. num of NN including self
+  const	int	d=*dim;		// Actual Dimension
+	const int n=*n_pts;	// Number of Data points
+	const int m=*m_pts;	// Number of Query  points	
+	const int	K= *k;		// Max. num of NN including self
 	int ptr;
  
   v_array<v_array<label_vector> > res;
@@ -145,7 +139,7 @@ void get_KNNX_cover(const double *data, const double *query,
   v_array<label_vector>  query_pts = copy_points(query, m, d);
   node<label_vector> top_query = batch_create(query_pts);
 
-  k_nearest_neighbor(top, top_query, res, numNN);
+  k_nearest_neighbor(top, top_query, res, K);
 
   for (int i = 0; i < m; i++)
   {	
@@ -159,15 +153,14 @@ void get_KNNX_cover(const double *data, const double *query,
 
       sort(dist.begin(), dist.end()); 
           
-    	for (int j = 1; j < numNN; j++)
+    	for (int j = 0; j < K; j++)
     	{
           nn_idx[ptr] = dist[j].id;	
     	  	nn_dist[ptr] = dist[j].dist;
 
     		  ptr++;
     	}    
-  }
-    	
+  }    	
 }
 } //end of extern  "C"
 

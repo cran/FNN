@@ -95,7 +95,7 @@ knn.cv <- function(train, cl, k=1, l=0,
 
   switch(algorithm,
      cover_tree =,
-     kd_tree  = {Z<- get.knnx(data=train, query=train, k=k);	         
+     kd_tree  = {Z<- get.knn(data=train, k=k, algorithm=algorithm);	         
                   nn.class<- matrix(cl[Z$nn.index], ncol=k); #factor levels are taken.      
                   pred_prob<- function(x) 
                   {
@@ -135,52 +135,66 @@ knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
 {
   #KNN regression. If test is not supplied, LOOCV is performed and R2 is the predicted R2
   algorithm<- match.arg(algorithm); 
+  
   train<- as.matrix(train);
-   
-  if(is.null(test)) {
-    notest<- TRUE;
-    test<- train;
-  } else notest<-FALSE;
-
-  if (is.null(dim(test))) 
-      dim(test) <- c(1, length(test))
-  if(is.vector(train)) {train<- cbind(train); test<- cbind(test)} #univariate
-  else if(is.vector(test)) test<- rbind(test);
-
+  if(!is.null(test)){
+    if (is.null(dim(test)))  dim(test) <- c(1, length(test))   #1 x p 
+    test <- as.matrix(test)
+  }
   ntr<- nrow(train); p<- ncol(train);
-  n<- ifelse(is.null(dim(test)), length(test), nrow(test)); #number of samples to be predict
+  n<- ifelse(is.null(test), nrow(train), nrow(test)); #number of samples to be predict
  
   pred<- switch(algorithm,
             cover_tree =, 
-            kd_tree = {Z<- get.knnx(train, test, k, algorithm);
+            kd_tree = {Z<- if(is.null(test)) get.knn(train, k, algorithm)
+                           else get.knnx(train, test, k, algorithm);
                       rowMeans(matrix(y[Z$nn.index], ncol=k));
             },
             VR = .C("VR_knnr",
                     as.integer(k), as.integer(ntr),	as.integer(n),
                     as.integer(p), as.double(train), as.double(y),
-                    as.double(test), res = double(n),	as.integer(is.null(test)),
+                    as.double(if(is.null(test)) train else test), res = double(n),	as.integer(is.null(test)),
                     as.integer(use.all), nn.index = integer(n*k), nn.dist = double(n*k)
             )$res            
   )
 
-  residuals<- if(notest) y-pred else NULL;
-  PRESS<- if(notest) sum(residuals^2) else NULL;
-  R2<- if(notest){ 1-PRESS/sum((y-mean(y))^2) } else NULL;
+  if(is.null(test)){
+    residuals<- y-pred ;
+    PRESS<- sum(residuals^2);
+    R2<- 1-PRESS/sum((y-mean(y))^2);
+  }
+  else{
+    residuals<-  PRESS<-  R2<- NULL;
+  }
+  
+  res <- list(call = match.call(), k = k, n = n, pred = pred, 
+      residuals = residuals, PRESS=PRESS, R2Pred = R2)
 
-  res<- list(call=match.call(), k=k, n=n, y=y, pred=pred, residuals=residuals, PRESS= round(PRESS), R_square=R2);
-  class(res)<- "KNNReg";
+  class(res)<- if(!is.null(test)) "knnReg" else "knnRegCV";
   
   return(res);
+}
+print.knnRegCV <-function (x, ...) 
+{      
+    if (!inherits(x, "knnRegCV")) 
+        stop(deparse(substitute(x)), " is not a knnRegCV object");
+        
+    cat("PRESS = ", x$PRESS, "\n")
+    cat("R2-Predict = ", x$R2Pred, "\n")
+}
+print.knnReg <-function (x, ...)
+{
+    if (!inherits(x, "knnReg"))
+        stop(deparse(substitute(x)), " is not a knnReg object");
+
+    cat("Prediction: ", x$pred, "\n")
 }
 
 knn.reg.VR2<- function(train, test=NULL, y, k=3, use.all=FALSE)
 {
   #using VR get.knnx
+  #self-matching problem not done yet.
 
-  if(is.null(test)) {
-    notest<- TRUE;
-    test<- train;
-  } else notest<-FALSE;
 
   if(is.vector(train)) {train<- cbind(train); test<- cbind(test)} #univariate
   else if(is.vector(test)) test<- rbind(test);
@@ -188,14 +202,25 @@ knn.reg.VR2<- function(train, test=NULL, y, k=3, use.all=FALSE)
   ntr<- nrow(train); p<- ncol(train);
   n<- ifelse(is.null(dim(test)), length(test), nrow(test)); #number of samples to be predict
 
-  Z <- get.knnx(train, test, k, algorithm="VR");
-
+  Z<- if(is.null(test)) get.knn(train, k, algorithm="VR")
+      else get.knnx(train, test, k, algorithm="VR");
+      
   pred<- rowMeans(matrix(y[Z$nn.index], ncol=k));
+  
+  if(is.null(test)){
+    residuals<- y-pred ;
+    PRESS<- sum(residuals^2);
+    R2<- 1-PRESS/sum((y-mean(y))^2);
+  }
+  else{
+    residuals<-  PRESS<-  R2<- NULL;
+  }
+  
+  res <- list(call = match.call(), k = k, n = n, pred = pred, 
+      residuals = residuals, PRESS=PRESS, R2Pred = R2)
 
-  residuals<- if(notest) pred-y else NULL;
-
-  R2<- if(notest){ 1-sum(residuals^2)/sum((y-mean(y))^2) } else NULL;
-
-  list(call=match.call(), k=k, n=n, y=y, pred=pred, residuals=residuals, R2=R2);
+  class(res)<- if(!is.null(test)) "knnReg" else "knnRegCV";
+  
+  return(res);
 }
 

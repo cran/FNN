@@ -1,10 +1,14 @@
 ##Load dynamic library
-useDynLib(FNN, get_KNN_kd, get_KNN_cover, get_KNNX_kd, get_KNNX_VR, KNNentropy, KL_dist, KLD_dist)
+useDynLib(FNN, get_KNN_kd, get_KNN_cover, get_KNNX_kd, get_KNNX_VR, KNN_MLD, KL_divergence, KL_dist)
 
 #Export directive
 
 #functions
 export(get.knn, knn.dist, knn.index,
-get.knnx, knnx.dist, knnx.index,  KL.dist, KLD.dist,
+get.knnx, knnx.dist, knnx.index, 
+entropy, crossentropy,
+KL.divergence, KL.dist,  KLx.divergence, KLx.dist,
 knn, knn.cv, knn.reg
 )
+S3method(print, knnReg)
+S3method(print, knnRegCV)
