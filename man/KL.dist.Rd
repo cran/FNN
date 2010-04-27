@@ -45,6 +45,7 @@ S. Boltz, E. Debreuve and M. Barlaud (2009).
 }
 
 \examples{
+    set.seed(1000)
     X<- rexp(10000, rate=0.2)
     Y<- rexp(10000, rate=0.4)
     

@@ -20,7 +20,7 @@ get.knn<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR"))
               kd_tree= "get_KNN_kd",
               VR = "get_KNN_VR" 
   ); 
-  knnres<- .C(Cname, data, as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k));
+  knnres<- .C(Cname, t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k), DUP=FALSE);
                                            
   nn.index<-  matrix(knnres$nn.index, byrow=T, nrow=n, ncol=k);
   nn.dist<- matrix(knnres$nn.dist, byrow=T, nrow=n, ncol=k);
@@ -53,7 +53,7 @@ get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "
                 kd_tree= "get_KNNX_kd",                 
                 VR = "get_KNNX_VR"
   ); 
-  knnres<- .C(Cname, data, query, as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k));
+  knnres<- .C(Cname, t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k), DUP=FALSE);
                                              
   nn.index<- matrix(knnres$nn.index, byrow=T, nrow=m, ncol=k);
   nn.dist<-  matrix(knnres$nn.dist,  byrow=T, nrow=m, ncol=k);

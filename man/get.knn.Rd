@@ -29,13 +29,6 @@
 
   the \emph{VR} algorithm is the one used in \pkg{class} package.
 
-  In a performance test on a PC:\cr  
-    (1) for small samples (\eqn{n \leq 500}{n <= 500}), \emph{VR} is faster than the other complex data structures;\cr
-    (2) for larger samples (\eqn{n \geq 1000}{n >= 1000}), \emph{kd tree} is faster than the other two for low-dimensional data (\eqn{p \leq 10}{p <= 10}),
-  \emph{VR} algorithm is fast for moderate dimension (\eqn{20 \leq  p \leq 60}{20 < p <=60}),
-  while \emph{cover tree} is the fastest for lager high-dimensional data (\eqn{p > 60}{p > 60}).
-  
-   See comparison figures in the doc folder.
 }
 
 \value{

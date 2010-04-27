@@ -57,7 +57,7 @@ knn<- function(train, test, cl, k=1, l=0,
                  as.integer(nte), as.integer(p), as.double(train), 
                   as.integer(unclass(clf)), as.double(test), res = integer(nte),
                   pr = double(nte), integer(nc+1), as.integer(nc), as.integer(FALSE),
-                  as.integer(use.all), nn.index = integer(nte*k), nn.dist = double(nte*k)
+                  as.integer(use.all), nn.index = integer(nte*k), nn.dist = double(nte*k), DUP=FALSE
                 );
                 res <- factor(Z$res, levels=seq_along(levels(clf)),labels=levels(clf));
                 if(prob) pr<- Z$pr;
@@ -66,7 +66,7 @@ knn<- function(train, test, cl, k=1, l=0,
       
   if(prob) attr(res, "prob") <- pr;
   attr(res, "nn.index")<- matrix(Z$nn.index, ncol=k);;
-  attr(res, "nn.dist")<- matrix(sqrt(Z$nn.dist), ncol=k);
+  attr(res, "nn.dist")<- matrix(Z$nn.dist, ncol=k);
  
   return(res);
 }
@@ -115,7 +115,7 @@ knn.cv <- function(train, cl, k=1, l=0,
                   as.double(train), as.integer(unclass(clf)), as.double(train),
                   res = integer(ntr), pr = double(ntr), integer(nc+1),
                   as.integer(nc), as.integer(TRUE), as.integer(use.all),
-                  nn.index = integer(ntr*k), nn.dist = double(ntr*k)
+                  nn.index = integer(ntr*k), nn.dist = double(ntr*k), DUP=FALSE
                   );
               res <- factor(Z$res, levels=seq_along(levels(clf)),labels=levels(clf));
                   if(prob) pr<- Z$pr;
@@ -124,7 +124,7 @@ knn.cv <- function(train, cl, k=1, l=0,
       
   if(prob) attr(res, "prob") <- pr;
   attr(res, "nn.index")<- matrix(Z$nn.index, ncol=k);;
-  attr(res, "nn.dist")<- matrix(sqrt(Z$nn.dist), ncol=k);
+  attr(res, "nn.dist")<- matrix(Z$nn.dist, ncol=k);
 
   return(res);
 }
@@ -154,7 +154,7 @@ knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
                     as.integer(k), as.integer(ntr),	as.integer(n),
                     as.integer(p), as.double(train), as.double(y),
                     as.double(if(is.null(test)) train else test), res = double(n),	as.integer(is.null(test)),
-                    as.integer(use.all), nn.index = integer(n*k), nn.dist = double(n*k)
+                    as.integer(use.all), nn.index = integer(n*k), nn.dist = double(n*k), DUP=FALSE
             )$res            
   )
 
@@ -187,15 +187,16 @@ print.knnReg <-function (x, ...)
     if (!inherits(x, "knnReg"))
         stop(deparse(substitute(x)), " is not a knnReg object");
 
-    cat("Prediction: ", x$pred, "\n")
+    cat("Prediction:\n");
+    
+    print(x$pred);
 }
 
 knn.reg.VR2<- function(train, test=NULL, y, k=3, use.all=FALSE)
 {
   #using VR get.knnx
-  #self-matching problem not done yet.
-
-
+  #same result as knn.reg
+  
   if(is.vector(train)) {train<- cbind(train); test<- cbind(test)} #univariate
   else if(is.vector(test)) test<- rbind(test);
 

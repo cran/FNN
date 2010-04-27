@@ -18,9 +18,7 @@
  
 /*12/16/2008*/
  
- 
 #include <R.h>
-#include <math.h>
 
 #define EPS 1e-4		/* relative test of equality of distances */
 #define MAX_TIES 1000
@@ -59,7 +57,8 @@ void get_KNN_VR(
           if(j == i) continue; //no self-match allowed 
   	    	dist = 0.0;
   	    	for (int k = 0; k < d; k++) {
-    				tmp = train[i + k * n] - train[j + k * n];
+    			//	tmp = train[i + k * n] - train[j + k * n];
+    				tmp = train[k + i*d] - train[k + j*d];
     				dist += tmp * tmp;
   	    	}
   			/* Use 'fuzz' since distance computed could depend on order of coordinates */
@@ -122,7 +121,9 @@ void get_KNNX_VR(
   		for (int j = 0; j < n; j++) { 
   	    	dist = 0.0;
   	    	for (int k = 0; k < d; k++) {
-  				tmp = test[i + k * m] - train[j + k * n];
+  			//	tmp = test[i + k * m] - train[j + k * n]; //column major
+  				tmp = test[k + i*d] - train[k+j*d];   //row major
+  			
   				dist += tmp * tmp;
   	    	}
   		    /* Use 'fuzz' since distance computed could depend on order of coordinates */

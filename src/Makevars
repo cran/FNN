@@ -1,4 +1,9 @@
 #ANN 1.1.2
 #PKG_LIBS = -Llib -lmgwANN
-PKG_CPPFLAGS = -Iinclude
+PKG_CPPFLAGS = -Iinclude -DUSING_R -DUSING_RPRINTF
 PKG_LIBS =
+
+all: $(SHLIB) clean
+
+clean:
+	$(RM) *.o core

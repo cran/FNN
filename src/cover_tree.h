@@ -1,11 +1,16 @@
 #ifndef COVERTREE_H
 #define COVERTREE_H
 
-#include<cmath>
+#include <cmath>
 #include<cstdio>
-#include <cfloat>		// special values
 #define NDEBUG
-#include<assert.h>
+#include<cassert>
+
+#ifndef MAXFLOAT
+#include <cfloat>		// special values. replace values.h
+#define MAXFLOAT FLT_MAX
+#endif
+
 #include "stack.h"
 
 /* First written by John Langford jl@hunch.net
@@ -65,7 +70,7 @@ inline float dist_of_scale (int s)
 
 inline int get_scale(float d)
 {
-  return (int) ceilf(il2 * log(d));
+  return (int) ceil(il2 * log(d));
 }
 
 
@@ -97,7 +102,7 @@ node<P> new_node(const P &p)
 template<class P>
 node<P> new_leaf(const P &p)
 {
-  node<P> new_leaf = {p,0.,0.,NULL,0,100};
+  node<P> new_leaf = {p,0.0f,0.0f,NULL,0,100};
   return new_leaf;
 }
 
@@ -282,7 +287,7 @@ node<P> batch_create(v_array<P> points)
 
   for (int i = 1; i < points.index; i++) {
     ds_node<P> temp;
-    push(temp.dist, distance(points[0], points[i], DBL_MAX)); 
+    push(temp.dist, distance(points[0], points[i], MAXFLOAT)); 
     temp.p = points[i];
     push(point_set,temp);
   }
@@ -788,9 +793,9 @@ void batch_nearest_neighbor(const node<P> &top_node, const node<P> &query,
   v_array<d_node<P> > zero_set = pop(spare_zero_sets);
   
   float* upper_bound = alloc_upper();
-  setter(upper_bound, DBL_MAX);
+  setter(upper_bound, MAXFLOAT);
   
-  float top_dist = distance(query.p, top_node.p,  DBL_MAX);
+  float top_dist = distance(query.p, top_node.p,  MAXFLOAT);
   update(upper_bound, top_dist);
   
   d_node<P> temp = {top_dist, &top_node};

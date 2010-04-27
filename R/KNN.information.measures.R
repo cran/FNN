@@ -18,7 +18,7 @@ entropy<- function (X, k=10,  algorithm="kd_tree")
 
   if (storage.mode(X) == "integer")  storage.mode(X) <- "double"
 
-  MLD<- .C("KNN_MLD", X, as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
+  MLD<- .C("KNN_MLD", t(X), as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
   # mean of log dist
 
   H <- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(n) - digamma(1:k)
@@ -88,7 +88,7 @@ KLx.divergence<- function (X, Y, k = 10, algorithm="kd_tree")
   if(d!=p) stop("Number of columns must be same!.");
   if(k>=n) warning("k should be less than sample size!");
 
-  .C("KL_divergence", X, Y, as.integer(k), d, n, m, KL = double(k))$KL;
+  .C("KL_divergence", t(X), t(Y), as.integer(k), d, n, m, KL = double(k), DUP=FALSE)$KL;
 
 }
 
@@ -108,7 +108,7 @@ KLx.dist<- function (X, Y, k = 10, algorithm="kd_tree")
   if(d!=p) stop("Number of columns must be same!.");
   if(k>=n) warning("k should be less than sample size!");
 
-  .C("KL_dist", X, Y, as.integer(k), d, n, m, KLD = double(k))$KLD;
+  .C("KL_dist", t(X), t(Y), as.integer(k), d, n, m, KLD = double(k), DUP=FALSE)$KLD;
 
 }
 
