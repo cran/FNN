@@ -102,7 +102,18 @@ node<P> new_node(const P &p)
 template<class P>
 node<P> new_leaf(const P &p)
 {
-  node<P> new_leaf = {p,0.0f,0.0f,NULL,0,100};
+//  node<P> new_leaf = {p,0.,0.,NULL,0,100};
+//  SUN Studio doesn't like above. 2010-4-30 by Shengqiao Li
+
+  node<P> new_leaf;
+
+		new_leaf.p = p;
+		new_leaf.max_dist = 0.0f;
+		new_leaf.parent_dist = 0.0f;
+		new_leaf.children = NULL;
+		new_leaf.num_children = 0;
+		new_leaf.scale = 100;
+		
   return new_leaf;
 }
 

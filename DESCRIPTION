@@ -1,6 +1,6 @@
 Package: FNN
-Version: 0.5-8
-Date: 2010-04-27
+Version: 0.5-9
+Date: 2010-04-30
 Title: Fast Nearest Neighbor Search Algorithms and Applications
 Author: Shengqiao Li <shli@stat.wvu.edu>
 Maintainer: Shengqiao Li <shli@stat.wvu.edu>
@@ -11,6 +11,6 @@ Description: A collection of fast k-nearest neighbor search algorithms
         classification, regression and information measures are also
         implemented.
 License: GPL (>= 2)
-Packaged: 2010-04-27 21:49:57 UTC; tiger
+Packaged: 2010-05-10 00:23:19 UTC; tiger
 Repository: CRAN
-Date/Publication: 2010-04-28 07:25:50
+Date/Publication: 2010-05-10 05:27:23

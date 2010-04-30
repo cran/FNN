@@ -1,5 +1,9 @@
+		CHANGES IN FNN VERSION 0.5-9
 
-		CHANGES IN FNN VERSION 0.5
+  o Try to fix complier complaints on 64-sun and soloris-sparc platforms.
+  
+
+		CHANGES IN FNN VERSION 0.5-8
 
 NEW FEATURES
   o memory deallocation for cover tree is added. No more memory leaks.
@@ -8,7 +12,7 @@ NEW FEATURES
     and cove tree as in VR.
      
   o new_leaf initial values changed from 0. to 0.0f in order to solve SUN Studio complaints.
-     
+
 BUG FIXED
   o sqrt was extra for distance for knn and knn.cv
 
