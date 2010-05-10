@@ -1,6 +1,17 @@
-#include <cstdio>
-#include "label_point.h"
+/********************************************************************************
+* This file is for testing purpose only. FNN lib will no depend on it.          *
+* It can be linked against FNN shared library or compiled with other source code*
+* together.                                                                     *
+********************************************************************************/
 
+/*Solaris does not have a native cstdio */
+#ifdef __sun
+#include <stdio.h>
+#else
+#include <cstdio>
+#endif
+
+#include "label_point.h"
 
 extern int N;
 extern int dim;

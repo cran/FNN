@@ -4,7 +4,9 @@
 
 #ifdef USING_RPRINTF
   #include "R.h"
-  #define printf Rprintf   //only used in 
+  #define printf Rprintf
+  //Rprintf only used within R.
+  //Not for standalone program linked with FNN library. (It will crash on Windows)
 #endif  
 
 int dim;

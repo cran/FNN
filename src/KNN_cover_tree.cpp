@@ -16,7 +16,9 @@
 #ifdef USING_R 
   #include "R.h"
   #ifdef USING_RPRINTF
-    #define printf Rprintf   //only used in 
+    #define printf Rprintf
+  //Rprintf only used within R.
+  //Not for standalone program  linked with FNN library. (It will crash on Windows)
   #endif  
 #endif
 

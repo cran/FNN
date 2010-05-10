@@ -3,7 +3,11 @@
 PKG_CPPFLAGS = -Iinclude -DUSING_R -DUSING_RPRINTF
 PKG_LIBS =
 
+#clean after building
 all: $(SHLIB) clean
 
-clean:
+clean: $(SHLIB)
 	$(RM) *.o core
+
+
+
