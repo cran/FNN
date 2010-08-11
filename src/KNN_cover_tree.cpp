@@ -22,8 +22,6 @@
   #endif  
 #endif
 
-extern int dim; //declared in label_vector.h
-
 v_array<label_point> copy_points(const double* data, int n, int d)
 //copy point address only
 {
@@ -33,10 +31,16 @@ v_array<label_point> copy_points(const double* data, int n, int d)
   #else
   register label_point* elems = (label_point*)calloc(n, sizeof(label_point));  
   #endif            
+  
+  //converting  double to float doesn't help fewer than k neighbor problem.
+  //float *coord = (float*)R_alloc(n*dim, sizeof(float));
+  //for(int j = 0; j<n*dim; j++) coord[j] = (float)data[j];
+  
   for(int i=0; i<n; i++)
   {          
     elems[i].label = i;
     elems[i].coord = data+i*d; 
+//    print(elems[i]);
   }
 
   v_array<label_point> point_array;
@@ -81,7 +85,7 @@ void get_KNN_dist_cover(double *data, const int *k,
 //only distance. may faster
 {
 	const int	d=*p;		// Actual Dimension
-	const int n=*n_pts;	// Number of Data points
+	const int	n=*n_pts;	// Number of Data points
 	const int	K= *k + 1;		// Max. num of NN including self
 	int ptr;
 

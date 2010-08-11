@@ -1,6 +1,6 @@
 /******************************************************************************\
 * File: KNN_ANN.cpp                                                            *
-* K Near Neighbour Program                       				                       *
+* K Nearest Neighbour Program                       				               *
 * Assume ANN lib allows Self-match                                             *
 * Tree construction is fast, search is slow.                                   *
 \******************************************************************************/
@@ -9,11 +9,11 @@
 
 using namespace std;
 
-void 	Rvector2ANNarray(ANNpointArray data_pts,
+void Rvector2ANNarray(ANNpointArray data_pts,
       double *data,
       const int n, const int d)
 {
-	//copy data point address into n x d matrix from n*d R vector column by column 
+	//copy data point address into n x d matrix from d x n R vector column by column 
  	for (int i = 0; i < n; i++) {
 		data_pts[i] = data+i*d;
 	}	 	   	    
@@ -24,7 +24,7 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 {
 	const int	d=*dim;		// Actual Dimension
 	const int	n=*n_pts;	// Number of Data points
-	const int	K = *k+1;		// Max. num of NN. first one  (itself) will discarded.
+	const int	K = *k+1;	// Max. num of NN. first one  (itself) will discarded.
 	const double		error_bound = 0.0;
 	register int ptr = 0;
 	
@@ -40,11 +40,11 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 	for(int i = 0; i < n; i++)	// read query points
 	{
 	    kd_tree->annkSearch(	// search
-			data_pts[i],		      // query point
+			data_pts[i],		  // query point
 			K,				      // number of near neighbors
-			index,				        // nearest neighbors index
-			dist,				          // squared distance
-			error_bound);		      // error bound
+			index,				  // nearest neighbors index
+			dist,				  // squared distance
+			error_bound);		  // error bound
 
 	    for (int j = 1; j < K; j++)      //return result row by row
 	    {
@@ -78,7 +78,7 @@ void get_KNNX_kd(double *data, double* query,
 //	ANNpointArray	data_pts  = annAllocPts(n, d);	// Base Data points
 //	ANNpointArray	query_pts  = annAllocPts(m, d);	// Query Data points
   ANNpointArray	data_pts  = new ANNpoint[n];			
-  ANNpointArray	query_pts  = new ANNpoint[n];			
+  ANNpointArray	query_pts  = new ANNpoint[m];			
 
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
@@ -109,12 +109,15 @@ void get_KNNX_kd(double *data, double* query,
 
 	delete[] index;
 	delete[] dist;	
-	delete kd_tree;
-//	annDeallocPts(data_pts);
-//	annDeallocPts(query_pts);
-delete[] data_pts;
-delete[] query_pts;
+//	delete kd_tree;
 
+	//	annDeallocPts(data_pts);
+//	annDeallocPts(query_pts);
+	delete[] data_pts;
+	delete[] query_pts;
+	delete kd_tree;
+
+	
 	annClose();
 	
 }//end get_KNNX_kd

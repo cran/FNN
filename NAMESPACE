@@ -2,7 +2,7 @@
 useDynLib(FNN,
 get_KNN_cover, get_KNNX_cover,
 get_KNN_kd, get_KNNX_kd,
-get_KNN_VR, get_KNNX_VR,
+get_KNN_VR, get_KNNX_VR, get_KNN_CR,
 KNN_MLD, KL_divergence,
 KL_dist)
 

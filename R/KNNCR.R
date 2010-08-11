@@ -8,7 +8,8 @@
 # ANN is slower than VR's method.                                              #
 # for large dataset, ANN is faster                                             #
 ################################################################################
-
+# note: data input for VR_knnc, VR_knnr in n x d format.
+#
 knn<- function(train, test, cl, k=1, l=0, 
               prob=FALSE, use.all=TRUE, 
               algorithm=c("cover_tree", "kd_tree", "VR")

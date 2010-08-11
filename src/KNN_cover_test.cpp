@@ -13,9 +13,6 @@
 
 #include "label_point.h"
 
-extern int N;
-extern int dim;
-
 void print_index(int *nn_idx, int k)
 {
   printf("$index:\n");
@@ -52,7 +49,7 @@ extern "C" void get_KNN_cover(double *data, const int *k,  const int *p, const i
 int main(int argc, char *argv[])
 {
    int k = atoi(argv[1]);
-   double *data = parse_points(argv[2]);
+   double *data = parse_points<double>(argv[2]);
 
    int* nn_idx= new int[N*k];
    double* nn_dist= new double[N*k];

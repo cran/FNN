@@ -1,6 +1,6 @@
 ################################################################################
 # KNN Information Theory Measures                                              #
-# File:   KNN.information.measures.R                                           #                   #
+# File:   KNN.information.measures.R                                           #
 # Author: Shengqiao Li                                                         #
 # Date:   December 12, 2008                                                    #
 #         2010-3-25 add entropy and crossentropy                               #
@@ -42,7 +42,7 @@ crossentropy <- function(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
 	if(k>=n) stop("k must less than the sample size!");
 
 	dnn<- knnx.dist(Y, X, k=k, algorithm=algorithm);
-  MLD<- colMeans(log(dnn));
+    MLD<- colMeans(log(dnn));
 	H<- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(m) - digamma(1:k)
 
 	return (H);
