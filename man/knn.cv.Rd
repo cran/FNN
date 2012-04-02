@@ -7,7 +7,7 @@
 
 \usage{
 knn.cv(train, cl, k = 1, l = 0, prob = FALSE, use.all = TRUE,
-      algorithm=c("cover_tree", "kd_tree", "VR"))
+      algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 }
 \arguments{
 \item{train}{matrix or data frame of training set cases.}

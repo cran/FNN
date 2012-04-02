@@ -123,6 +123,17 @@
 #define ANNcopyright	"David M. Mount and Sunil Arya"
 #define ANNlatestRev	"Jan 27, 2010"
 
+
+#ifdef USING_R 
+  #include "R.h" 
+  #ifdef USING_RPRINT
+    #define printf Rprintf
+    #define exit error
+  //Rprintf only used within R.
+  //Not for standalone program  linked with FNN library. (It will crash on Windows)
+  #endif  
+#endif 
+
 //----------------------------------------------------------------------
 //	ANNbool
 //	This is a simple boolean type. Although ANSI C++ is supposed

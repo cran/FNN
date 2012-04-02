@@ -13,15 +13,6 @@
 #include "label_point.h"
 #include "cover_tree.h"
 
-#ifdef USING_R 
-  #include "R.h"
-  #ifdef USING_RPRINTF
-    #define printf Rprintf
-  //Rprintf only used within R.
-  //Not for standalone program  linked with FNN library. (It will crash on Windows)
-  #endif  
-#endif
-
 v_array<label_point> copy_points(const double* data, int n, int d)
 //copy point address only
 {

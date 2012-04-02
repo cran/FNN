@@ -5,7 +5,7 @@
 # Date:   December 12, 2008                                                    #
 #         2010-3-25 add entropy and crossentropy                               #
 ################################################################################
-entropy<- function (X, k=10,  algorithm="kd_tree")
+entropy<- function (X, k=10, algorithm=c("brute", "kd_tree"))
 {
   algorithm<- match.arg(algorithm);
 
@@ -18,7 +18,12 @@ entropy<- function (X, k=10,  algorithm="kd_tree")
 
   if (storage.mode(X) == "integer")  storage.mode(X) <- "double"
 
-  MLD<- .C("KNN_MLD", t(X), as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
+  Cname<- switch(algorithm,
+              kd_tree= "KNN_MLD_kd",
+              brute = "KNN_MLD_brute"
+  );
+
+  MLD<- .C(Cname, t(X), as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
   # mean of log dist
 
   H <- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(n) - digamma(1:k)
@@ -26,7 +31,7 @@ entropy<- function (X, k=10,  algorithm="kd_tree")
   return(H)
 }
 
-crossentropy <- function(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
+crossentropy <- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 {
   algorithm<- match.arg(algorithm);
 	if (!(is.numeric(X)&& is.numeric(Y))) stop("Data non-numeric");
@@ -48,7 +53,7 @@ crossentropy <- function(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
 	return (H);
 }
 
-KL.divergence<- function(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
+KL.divergence<- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 {
   #Kullback-Leibler Distance
   algorithm<- match.arg(algorithm);
@@ -63,7 +68,7 @@ KL.divergence<- function(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
 
 }
 
-KL.dist<- function(X, Y, k=10,  algorithm=c("cover_tree", "kd_tree", "VR"))
+KL.dist<- function(X, Y, k=10,  algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 {
   #Symmetric Kullback-Leibler divergence. i.e. Kullback-Leibler distance
   algorithm<- match.arg(algorithm);

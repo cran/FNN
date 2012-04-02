@@ -3,7 +3,6 @@
 
 #include <cmath>
 #include<cstdio>
-#define NDEBUG
 #include<cassert>
 
 #ifndef MAXFLOAT
@@ -659,49 +658,49 @@ void descend(const node<P>* query, float* upper_bound,
       const node<P> *par = parent->n;
       float upper_dist = *upper_bound + query->max_dist + query->max_dist;
       if (parent->dist <= upper_dist + par->max_dist)
-	{
-	  node<P> *chi = par->children;
-	  if (parent->dist <= upper_dist + chi->max_dist)
-	    if (chi->num_children > 0)
-	      {
-		if (max_scale < chi->scale)
-		  max_scale = chi->scale;
-		d_node<P> temp = {parent->dist, chi};
-		push(cover_sets[chi->scale], temp);
-	      }
-	    else if (parent->dist <= upper_dist)
-	      {
-		d_node<P> temp = {parent->dist, chi};
-		push(zero_set, temp);
-	      }
-	  node<P> *child_end = par->children + par->num_children;
-	  for (chi++; chi != child_end; chi++)
-	    {
-	      float upper_chi = *upper_bound + chi->max_dist + query->max_dist + query->max_dist;
-	      if (shell(parent->dist, chi->parent_dist, upper_chi))
-		{
-		  float d = distance(query->p, chi->p, upper_chi);
-		  if (d <= upper_chi) 
+	  {
+		  	node<P> *chi = par->children;
+		 	if (parent->dist <= upper_dist + chi->max_dist)
+		  	{
+		    	if (chi->num_children > 0)
+		    	{
+					if (max_scale < chi->scale)  max_scale = chi->scale;
+					d_node<P> temp = {parent->dist, chi};
+					push(cover_sets[chi->scale], temp);
+		     	}
+		    	else if (parent->dist <= upper_dist)
+		    	{
+					d_node<P> temp = {parent->dist, chi};
+					push(zero_set, temp);
+		    	}
+	   		}
+		  	node<P> *child_end = par->children + par->num_children;
+		  	for (chi++; chi != child_end; chi++)
 		    {
-		      if (d < *upper_bound)
-			update(upper_bound, d);
-		      if (chi->num_children > 0)
-			{
-			  if (max_scale < chi->scale)
-			    max_scale = chi->scale;
-			  d_node<P> temp = {d, chi};
-			  push(cover_sets[chi->scale],temp);
-			}
-		      else 
-			if (d <= upper_chi - chi->max_dist)
-			  {
-			    d_node<P> temp = {d, chi};
-			    push(zero_set, temp);
-			  }
+		      float upper_chi = *upper_bound + chi->max_dist + query->max_dist + query->max_dist;
+		      if (shell(parent->dist, chi->parent_dist, upper_chi))
+				{
+			  		float d = distance(query->p, chi->p, upper_chi);
+			  		if (d <= upper_chi) 
+			    	{
+			      		if (d < *upper_bound) update(upper_bound, d);
+			      		if (chi->num_children > 0)
+						{
+				  			if (max_scale < chi->scale)
+						    max_scale = chi->scale;
+						  	d_node<P> temp = {d, chi};
+						  	push(cover_sets[chi->scale],temp);
+						}
+			      		else 
+						if (d <= upper_chi - chi->max_dist)
+				  		{
+				    		d_node<P> temp = {d, chi};
+				    		push(zero_set, temp);
+				  		}
+			    	}
+				}
 		    }
 		}
-	    }
-	}
     }
 }
 

@@ -3,7 +3,7 @@
 \title{Cross Entropy}
 \description{KNN Cross Entropy Estimators.}
 \usage{
-  crossentropy(X, Y, k=10, algorithm=c("cover_tree", "kd_tree", "VR"))
+  crossentropy(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 }
 
 \arguments{

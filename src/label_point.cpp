@@ -1,13 +1,6 @@
 #include "label_point.h"
 #include <cstdio>
 
-#ifdef USING_RPRINTF
-  #include "R.h"
-  #define printf Rprintf
-  //Rprintf only used within R.
-  //Not for standalone program linked with FNN library. (It will crash on Windows)
-#endif  
-
 int N;
 int dim;
 

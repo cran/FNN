@@ -6,7 +6,7 @@
 }
 \usage{
 knn.reg(train, test = NULL, y, k = 3, use.all = FALSE, 
-        algorithm=c("cover_tree", "kd_tree", "VR"))
+        algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
 }
 
 \arguments{

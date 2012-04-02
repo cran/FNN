@@ -12,7 +12,7 @@
 #
 knn<- function(train, test, cl, k=1, l=0, 
               prob=FALSE, use.all=TRUE, 
-              algorithm=c("cover_tree", "kd_tree", "VR")
+              algorithm=c("VR", "brute", "kd_tree", "cover_tree")
               )
 {
   algorithm<- match.arg(algorithm);
@@ -39,8 +39,9 @@ knn<- function(train, test, cl, k=1, l=0,
   clf <- as.factor(cl)
   nc <- max(unclass(clf))
   switch(algorithm,
-         cover_tree = ,
-         kd_tree ={Z<- get.knnx(data=train, query=test, k=k, algorithm);	         
+         cover_tree =,
+         kd_tree =,
+         brute = {Z<- get.knnx(data=train, query=test, k=k, algorithm);
                       nn.class<- matrix(cl[Z$nn.index], ncol=k); #factor levels are taken.      
                       pred_prob<- function(x) 
                       {
@@ -74,7 +75,7 @@ knn<- function(train, test, cl, k=1, l=0,
 
 knn.cv <- function(train, cl, k=1, l=0,
           prob=FALSE, use.all=TRUE,
-          algorithm=c("cover_tree", "kd_tree", "VR")
+          algorithm=c("VR", "brute", "kd_tree", "cover_tree")
           )
 {
   algorithm<- match.arg(algorithm);
@@ -96,7 +97,8 @@ knn.cv <- function(train, cl, k=1, l=0,
 
   switch(algorithm,
      cover_tree =,
-     kd_tree  = {Z<- get.knn(data=train, k=k, algorithm=algorithm);	         
+     kd_tree  =,
+     brute = {Z<- get.knn(data=train, k=k, algorithm=algorithm);
                   nn.class<- matrix(cl[Z$nn.index], ncol=k); #factor levels are taken.      
                   pred_prob<- function(x) 
                   {
@@ -131,7 +133,7 @@ knn.cv <- function(train, cl, k=1, l=0,
 }
 
 knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
-          algorithm=c("cover_tree", "kd_tree", "VR")
+          algorithm=c("VR", "brute", "kd_tree", "cover_tree")
           )
 {
   #KNN regression. If test is not supplied, LOOCV is performed and R2 is the predicted R2
@@ -147,7 +149,8 @@ knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
  
   pred<- switch(algorithm,
             cover_tree =, 
-            kd_tree = {Z<- if(is.null(test)) get.knn(train, k, algorithm)
+            kd_tree =,
+            brute = {Z<- if(is.null(test)) get.knn(train, k, algorithm)
                            else get.knnx(train, test, k, algorithm);
                       rowMeans(matrix(y[Z$nn.index], ncol=k));
             },

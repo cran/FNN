@@ -1,5 +1,5 @@
 /********************************************************************************
-* This file is for testing purpose only. FNN lib will no depend on it.          *
+* This file is for testing purpose only. FNN lib will not depend on it.         *
 * It can be linked against FNN shared library or compiled with other source code*
 * together.                                                                     *
 ********************************************************************************/

@@ -1,17 +1,18 @@
 #ANN 1.1.2
 #undefine WIN32 is necessary
 #PKG_LIBS = -Llib -lmgwANN
-PKG_CPPFLAGS = -Iinclude -UWIN32 -DUSING_R -DUSING_RPRINTF
+PKG_CPPFLAGS = -O3 -Iinclude -UWIN32 -DUSING_R -DUSING_RPRINT
 PKG_LIBS =
 MAIN_LD=$(CXX)
 
+all: $(SHLIB) clean
 # special rules for the test program
-OBJS-NO = KNN_cover_test.o
+#OBJS-NO = KNN_cover_test.o
 
-all: $(SHLIB) cover_test.exe clean
+#all: $(SHLIB) cover_test.exe clean
 
-cover_test.exe: KNN_cover_test.o
-cover_test-LIBS = -L. -lFNN
+#cover_test.exe: KNN_cover_test.o
+#cover_test-LIBS = -L. -lFNN
 
 clean:
 	$(RM) *.o

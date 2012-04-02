@@ -169,11 +169,19 @@ ANNbool ANNorthRect::inside(int dim, ANNpoint p)
 void annError(const char* msg, ANNerr level)
 {
 	if (level == ANNabort) {
+#ifdef USING_R
+		error("ANN: ERROR------->", msg, "<-------------ERROR\n");
+#else
 		cerr << "ANN: ERROR------->" << msg << "<-------------ERROR\n";
 		exit(1);
+#endif
 	}
 	else {
+#ifdef USING_R
+		REprintf("ANN: WARNING----->", msg, "<-------------WARNING\n");
+#else		
 		cerr << "ANN: WARNING----->" << msg << "<-------------WARNING\n";
+#endif		
 	}
 }
 

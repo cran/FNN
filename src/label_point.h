@@ -7,6 +7,16 @@
 #include <cmath>
 #include "stack.h"
 
+#ifdef USING_R 
+  #include "R.h"
+  #ifdef USING_RPRINT
+    #define printf Rprintf
+    #define exit error
+  //Rprintf only used within R.
+  //Not for standalone program  linked with FNN library. (It will crash on Windows)
+  #endif  
+#endif 
+
 extern int N;
 extern int dim;
 
@@ -75,8 +85,8 @@ P* parse_points(char *filename)
 
       if (dim > 0 && dim!= p.index)
 	   {
-	      printf("Can't handle vectors of differing length, bailing\n");
-        exit(0);
+	      printf("Can't handle vectors of differing length, bailing\n");	      
+          exit(0);
 	   }
 
       dim = p.index;

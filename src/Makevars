@@ -1,6 +1,6 @@
 #ANN 1.1.2
 #PKG_LIBS = -Llib -lmgwANN
-PKG_CPPFLAGS = -Iinclude -DUSING_R -DUSING_RPRINTF
+PKG_CPPFLAGS = -Iinclude -DUSING_R -DUSING_RPRINT
 PKG_LIBS =
 
 #clean after building

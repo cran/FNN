@@ -5,7 +5,7 @@
 \title{Kullback-Leibler Divergence}
 \description{Compute Kullback-Leibler symmetric distance.}
 \usage{
-  KL.dist(X, Y, k = 10, algorithm=c("cover_tree", "kd_tree", "VR"))
+  KL.dist(X, Y, k = 10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
   KLx.dist(X, Y, k = 10, algorithm="kd_tree")    
 }
 

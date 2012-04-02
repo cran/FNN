@@ -1,3 +1,12 @@
+
+
+		CHANGES IN FNN VERSION 0.6-3
+
+  o Remove links to some cross-refence packages which may not-yet-installed.
+  o Add suggested packages
+  o Add the brute-force (linear scan) method.
+
+
 		CHANGES IN FNN VERSION 0.6-2
 
   o Add 1 - inner product distance measure.

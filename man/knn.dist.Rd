@@ -7,8 +7,8 @@
 }
 \usage{
 
-  knn.dist(data, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR"))
-  knnx.dist(data, query, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR"))
+  knn.dist(data, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+  knnx.dist(data, query, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
 
 }
 %- maybe also 'usage' for other objects documented here.

@@ -102,7 +102,7 @@ DLL_API void annUpdateStats()				// update stats with current counts
 	ann_coord_hts += ann_Ncoord_hts;
 	ann_float_ops += ann_Nfloat_ops;
 }
-
+/*SL 2012-4-2
 										// print a single statistic
 void print_one_stat(const char* title, ANNsampStat s, double div)
 {
@@ -134,3 +134,4 @@ DLL_API void annPrintStats(				// print statistics for a run
 	cout << "  )\n";
 	cout.flush();
 }
+*/
