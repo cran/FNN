@@ -40,7 +40,7 @@ factor of classifications of test set. \code{doubt} will be returned as \code{NA
 \references{
   B.D. Ripley (1996). \emph{Pattern Recognition and Neural Networks.} Cambridge.
 
-  M.N. Venables and B.D. Ripley (2002)
+  M.N. Venables and B.D. Ripley (2002).
   \emph{Modern Applied Statistics with S.} Fourth edition.  Springer.
 }
 \note{
@@ -49,7 +49,7 @@ factor of classifications of test set. \code{doubt} will be returned as \code{NA
 
 }
 \seealso{
-  \code{\link{knn.cv}}   and \code{\link[class]{knn}} in \pkg{class}.
+  \code{\link{ownn}}, \code{\link{knn.cv}} and \code{\link[class]{knn}} in \pkg{class}.
 }
 \examples{
     data(iris3)

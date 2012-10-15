@@ -61,12 +61,15 @@ get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "
                                              
   nn.index<- matrix(knnres$nn.index, byrow=T, nrow=m, ncol=k);
   nn.dist<-  matrix(knnres$nn.dist,  byrow=T, nrow=m, ncol=k);
-
-  if(k>=n) {
-    nn.index[, n:k]<- NA;
-    nn.dist[, n:k]<- NA;
+#2012_10_15
+#  if(k>=n) {
+#    nn.index[, n:k]<- NA;
+#    nn.dist[, n:k]<- NA;
+#  }
+   if (k > n) {
+     nn.index[, (n+1):k] <- NA
+     nn.dist[, (n+1):k] <- NA
   }
-
   return(list(nn.index=nn.index, nn.dist=nn.dist));
 }
 knn.index<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
