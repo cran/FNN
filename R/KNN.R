@@ -7,9 +7,14 @@
 ################################################################################
 get.knn<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
 {
-  algorithm<- match.arg(algorithm);   
-  if(storage.mode(data)=="integer") storage.mode(data)<- "double";
+  algorithm<- match.arg(algorithm);  
+  
+  #check data
   if(!is.matrix(data)) data<- as.matrix(data);
+  if(!is.numeric(data)) stop("Data non-numeric")  
+  if(any(is.na(data))) stop("Data include NAs") 
+  if(storage.mode(data)=="integer") storage.mode(data)<- "double";
+
 
   n <- nrow(data);
   d <- ncol(data);
@@ -38,11 +43,19 @@ get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "
 {
   #k neearest neighbor Euclidean distances
   algorithm<- match.arg(algorithm);	  
-  if(storage.mode(data)=="integer") storage.mode(data)<- "double";
-  if(storage.mode(query)=="integer") storage.mode(query)<- "double";
-
+  
+  #check data
   if(!is.matrix(data)) data<- as.matrix(data);
+  if(!is.numeric(data)) stop("Data non-numeric")
+  if(any(is.na(data))) stop("Data include NAs") 
+  if(storage.mode(data)=="integer") storage.mode(data)<- "double";
+
+
+  #check query
   if(!is.matrix(query)) query<- as.matrix(query);
+  if(!is.numeric(query)) stop("Data non-numeric")
+  if(any(is.na(query))) stop("Data include NAs") 
+  if(storage.mode(query)=="integer") storage.mode(query)<- "double";
 
   n <- nrow(data); m<- nrow(query);
   d <- ncol(data); p<- ncol(query);

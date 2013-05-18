@@ -312,78 +312,77 @@ void VR_knnr(const int *kin, 		//k
 */
 
     for (npat = 0; npat < nte; npat++) {
-		kn = kinit;
-		for (k = 0; k < kn; k++) nndist[k] = 0.99 * DOUBLE_XMAX;
-		for (j = 0; j < ntr; j++) {
-	    	if ((*cv > 0) && (j == npat))	continue;
-	    	dist = 0.0;
-	    	for (k = 0; k < *p; k++) {
-				tmp = test[npat + k * nte] - train[j + k * ntr];
-				dist += tmp * tmp;
-	    	}
-			/* Use 'fuzz' since distance computed could depend on order of coordinates */
-	    	if (dist <= nndist[kinit - 1] * (1 + EPS)){
-				for (k = 0; k <= kn; k++){
-		    		if (dist < nndist[k]) {
-						for (k1 = kn; k1 > k; k1--) {
-				    		nndist[k1] = nndist[k1 - 1];
-				    		pos[k1] = pos[k1 - 1];
-						}
-						nndist[k] = dist;
-			
-						pos[k] = j;
-					/* Keep an extra distance if the largest current one ties with current kth */
-						if (nndist[kn] <= nndist[kinit - 1])
-				    		if (++kn == MAX_TIES - 1)	error("too many ties in knn");
-						break;
-		    		}
-	    	 	}
-	    	}
-	    	nndist[kn] = 0.99 * DOUBLE_XMAX;
-		}
-
-		for (k = 0; k < kinit; k++){		/*return distances and indice - Shengqiao Li*/
-			nn_dist[k*nte+npat]= sqrt(nndist[k]);			
-			nn_idx[k*nte+npat]=pos[k]+1;	
-		}									/*Done for return distances and indice		*/		 
-
-		res[npat] = 0;
-		if (*use_all) {
-	    	for (j = 0; j < kinit; j++)	res[npat] += Y[pos[j]];
-	    	extras = 0;
-		    for (j = kinit; j < kn; j++) {
-				if (nndist[j] > nndist[kinit - 1] * (1 + EPS))	break;
-				extras++;
-				res[npat] += Y[pos[j]];
-	    	}
-	    	res[npat] /= kn;
-		} //end of "use all"
-		else { /* break ties at random */
-	    	extras = 0;
-	    	for (j = 0; j < kinit; j++) {
-				if (nndist[j] >= nndist[kinit - 1] * (1 - EPS))
-		    		break;
-				res[npat] += Y[pos[j]];
-	    	}
-	   		j1 = j; 
-	    	if (j1 == kinit - 1) res[npat] += Y[pos[j1]]; /* no ties for largest */				
-	    	else {
-				/* Use reservoir sampling to choose amongst the tied distances */
-				j1 = j;
-				needed = kinit - j1;
-				for (j = 0; j < needed; j++) nY[j] = Y[pos[j1 + j]];
-				t = needed;
-				for (j = j1 + needed; j < kn; j++) {
-		    		if (nndist[j] > nndist[kinit - 1] * (1 + EPS))	break;
-		    		if (++t * UNIF < needed) {
-						j2 = j1 + (int) (UNIF * needed);
-						nY[j2] = Y[pos[j]];
-		    		}
-				}
-				for (j = 0; j < needed; j++) res[npat] += nY[j];
-	    	}
-   			res[npat] /= kinit;
-		}//end not "not use all"
+  		kn = kinit;
+  		for (k = 0; k < kn; k++) nndist[k] = 0.99 * DOUBLE_XMAX;
+  		for (j = 0; j < ntr; j++) {
+  	    	if ((*cv > 0) && (j == npat))	continue;
+  	    	dist = 0.0;
+  	    	for (k = 0; k < *p; k++) {
+    				tmp = test[npat + k * nte] - train[j + k * ntr];
+    				dist += tmp * tmp;
+  	    	}
+  			/* Use 'fuzz' since distance computed could depend on order of coordinates */
+  	    	if (dist <= nndist[kinit - 1] * (1 + EPS)){
+    				for (k = 0; k <= kn; k++){
+    		    		if (dist < nndist[k]) {
+      						for (k1 = kn; k1 > k; k1--) {
+      				    		nndist[k1] = nndist[k1 - 1];
+      				    		pos[k1] = pos[k1 - 1];
+      						}
+      						nndist[k] = dist;
+      			
+      						pos[k] = j;
+      					/* Keep an extra distance if the largest current one ties with current kth */
+      						if (nndist[kn] <= nndist[kinit - 1])
+      				    		if (++kn == MAX_TIES - 1)	error("too many ties in knn");
+      						break;
+    		    		}
+    	    	 	}
+    	    	}
+  	    	nndist[kn] = 0.99 * DOUBLE_XMAX;
+  		}
+  		for (k = 0; k < kinit; k++){		/*return distances and indice - Shengqiao Li*/
+  			nn_dist[k*nte+npat]= sqrt(nndist[k]);			
+  			nn_idx[k*nte+npat]=pos[k]+1;	
+  		}									/*Done for return distances and indice		*/		 
+  
+  		res[npat] = 0;
+  		if (*use_all) {
+  	    	for (j = 0; j < kinit; j++)	res[npat] += Y[pos[j]];
+  	    	extras = 0;
+  		    for (j = kinit; j < kn; j++) {
+    				if (nndist[j] > nndist[kinit - 1] * (1 + EPS))	break;
+    				extras++;
+    				res[npat] += Y[pos[j]];
+  	    	}
+  	    	res[npat] /= kinit + extras;
+  		} //end of "use all"
+  		else { /* break ties at random */
+  	    	extras = 0;
+  	    	for (j = 0; j < kinit; j++) {
+  				if (nndist[j] >= nndist[kinit - 1] * (1 - EPS))
+  		    		break;
+  				res[npat] += Y[pos[j]];
+  	    	}
+  	   		j1 = j; 
+  	    	if (j1 == kinit - 1) res[npat] += Y[pos[j1]]; /* no ties for largest */				
+  	    	else {
+  				/* Use reservoir sampling to choose amongst the tied distances */
+  				j1 = j;
+  				needed = kinit - j1;
+  				for (j = 0; j < needed; j++) nY[j] = Y[pos[j1 + j]];
+  				t = needed;
+  				for (j = j1 + needed; j < kn; j++) {
+  		    		if (nndist[j] > nndist[kinit - 1] * (1 + EPS))	break;
+  		    		if (++t * UNIF < needed) {
+  						j2 = j1 + (int) (UNIF * needed);
+  						nY[j2] = Y[pos[j]];
+  		    		}
+  				}
+  				for (j = 0; j < needed; j++) res[npat] += nY[j];
+  	    	}
+     			res[npat] /= kinit;
+  		}//end not "not use all"
     }
     RANDOUT;
 }

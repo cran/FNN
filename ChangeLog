@@ -1,3 +1,9 @@
+		CHANGES IN FNN VERSION 1.0
+
+  o get.knn works with an integer data.frame now.
+  o Fix knn.reg scaling issue when use.all is TRUE.
+  
+  
 		CHANGES IN FNN VERSION 0.6-4
 
   o Add optimal weighted knn classifier.

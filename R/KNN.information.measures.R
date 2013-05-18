@@ -9,14 +9,15 @@ entropy<- function (X, k=10, algorithm=c("brute", "kd_tree"))
 {
   algorithm<- match.arg(algorithm);
 
+  #check data
   if (!is.numeric(X))  stop("Data non-numeric")
   if (any(is.na(X)))   stop("Data include NAs")
   if (!is.matrix(X))   X <- matrix(X)
+  if (storage.mode(X) == "integer")  storage.mode(X) <- "double"
+
   n <- nrow(X)
   p <- ncol(X)
   if (k >= n) stop("k must less than the sample size!")
-
-  if (storage.mode(X) == "integer")  storage.mode(X) <- "double"
 
   Cname<- switch(algorithm,
               kd_tree= "KNN_MLD_kd",

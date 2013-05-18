@@ -27,9 +27,8 @@
 \author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
 \references{
   Richard J. Samworth (2012),
-  \dQuote{Optimal Weighted Nearest Neighbor Classifiers,} \emph{Annals of Statistics},  \bold{?}, ??-??.
+  \dQuote{Optimal Weighted Nearest Neighbor Classifiers,} \emph{Annals of Statistics},  \bold{40:5}, 2733-2763.
 }
-
 \seealso{
   \code{\link{knn}} and \code{\link[class]{knn}} in \pkg{class}.
 }
