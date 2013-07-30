@@ -7,8 +7,8 @@
   and the algorithm implemented in class package.
 }
 \usage{
-  knn.index(data, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
-  knnx.index(data, query, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+  knn.index(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  knnx.index(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 
 }
 \arguments{
@@ -53,7 +53,6 @@ Beygelzimer A., Kakade S. and Langford J. (2006),
   knn.index(data, k=5)
   knnx.index(data, query, k=5)
   knnx.index(data, query, k=5, algo="kd_tree")
-  knnx.index(data, query, k=5, algo="VR")
 
 }
 

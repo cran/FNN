@@ -8,7 +8,7 @@
 }
 \usage{
   ownn(train, test, cl, testcl=NULL, k = NULL, prob = FALSE,
-      algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+      algorithm=c("kd_tree", "cover_tree", "brute"))
 }
 \arguments{
   \item{train}{matrix or data frame of training set cases.}

@@ -10,9 +10,8 @@
 ################################################################################
 # note: data input for VR_knnc, VR_knnr in n x d format.
 #
-knn<- function(train, test, cl, k=1, l=0, 
-              prob=FALSE, use.all=TRUE, 
-              algorithm=c("VR", "brute", "kd_tree", "cover_tree")
+knn<- function(train, test, cl, k=1, prob=FALSE, 
+              algorithm=c("kd_tree", "cover_tree", "brute")
               )
 {
   algorithm<- match.arg(algorithm);
@@ -54,16 +53,7 @@ knn<- function(train, test, cl, k=1, l=0,
                       res<- matrix(unlist(res), ncol=2, byrow=TRUE);
                       if(prob) pr<- as.numeric(res[,2]);
                       res<- as.factor(res[,1]);
-         },
-         VR = {Z <- .C("VR_knnc", as.integer(k), as.integer(l), as.integer(ntr),
-                 as.integer(nte), as.integer(p), as.double(train), 
-                  as.integer(unclass(clf)), as.double(test), res = integer(nte),
-                  pr = double(nte), integer(nc+1), as.integer(nc), as.integer(FALSE),
-                  as.integer(use.all), nn.index = integer(nte*k), nn.dist = double(nte*k), DUP=FALSE
-                );
-                res <- factor(Z$res, levels=seq_along(levels(clf)),labels=levels(clf));
-                if(prob) pr<- Z$pr;
-        }
+         }
       )
       
   if(prob) attr(res, "prob") <- pr;
@@ -73,9 +63,8 @@ knn<- function(train, test, cl, k=1, l=0,
   return(res);
 }
 
-knn.cv <- function(train, cl, k=1, l=0,
-          prob=FALSE, use.all=TRUE,
-          algorithm=c("VR", "brute", "kd_tree", "cover_tree")
+knn.cv <- function(train, cl, k=1, prob=FALSE, 
+          algorithm=c("kd_tree", "cover_tree", "brute")
           )
 {
   algorithm<- match.arg(algorithm);
@@ -112,17 +101,8 @@ knn.cv <- function(train, cl, k=1, l=0,
                   res<- matrix(unlist(res), ncol=2, byrow=TRUE);
                   if(prob) pr<- as.numeric(res[,2]);
                   res<- as.factor(res[,1]);
-     },
-     VR = {Z <- .C("VR_knnc", as.integer(k), as.integer(l),
-                  as.integer(ntr), as.integer(ntr), as.integer(p),
-                  as.double(train), as.integer(unclass(clf)), as.double(train),
-                  res = integer(ntr), pr = double(ntr), integer(nc+1),
-                  as.integer(nc), as.integer(TRUE), as.integer(use.all),
-                  nn.index = integer(ntr*k), nn.dist = double(ntr*k), DUP=FALSE
-                  );
-              res <- factor(Z$res, levels=seq_along(levels(clf)),labels=levels(clf));
-                  if(prob) pr<- Z$pr;
      }
+    
   );
       
   if(prob) attr(res, "prob") <- pr;
@@ -132,8 +112,7 @@ knn.cv <- function(train, cl, k=1, l=0,
   return(res);
 }
 
-knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
-          algorithm=c("VR", "brute", "kd_tree", "cover_tree")
+knn.reg<- function(train, test=NULL, y, k=3, algorithm=c("kd_tree", "cover_tree", "brute")
           )
 {
   #KNN regression. If test is not supplied, LOOCV is performed and R2 is the predicted R2
@@ -153,13 +132,7 @@ knn.reg<- function(train, test=NULL, y, k=3, use.all=FALSE,
             brute = {Z<- if(is.null(test)) get.knn(train, k, algorithm)
                            else get.knnx(train, test, k, algorithm);
                       rowMeans(matrix(y[Z$nn.index], ncol=k));
-            },
-            VR = .C("VR_knnr",
-                    as.integer(k), as.integer(ntr),	as.integer(n),
-                    as.integer(p), as.double(train), as.double(y),
-                    as.double(if(is.null(test)) train else test), res = double(n),	as.integer(is.null(test)),
-                    as.integer(use.all), nn.index = integer(n*k), nn.dist = double(n*k), DUP=FALSE
-            )$res            
+            }          
   )
 
   if(is.null(test)){
@@ -196,36 +169,5 @@ print.knnReg <-function (x, ...)
     print(x$pred);
 }
 
-knn.reg.VR2<- function(train, test=NULL, y, k=3, use.all=FALSE)
-{
-  #using VR get.knnx
-  #same result as knn.reg
-  
-  if(is.vector(train)) {train<- cbind(train); test<- cbind(test)} #univariate
-  else if(is.vector(test)) test<- rbind(test);
 
-  ntr<- nrow(train); p<- ncol(train);
-  n<- ifelse(is.null(dim(test)), length(test), nrow(test)); #number of samples to be predict
-
-  Z<- if(is.null(test)) get.knn(train, k, algorithm="VR")
-      else get.knnx(train, test, k, algorithm="VR");
-      
-  pred<- rowMeans(matrix(y[Z$nn.index], ncol=k));
-  
-  if(is.null(test)){
-    residuals<- y-pred ;
-    PRESS<- sum(residuals^2);
-    R2<- 1-PRESS/sum((y-mean(y))^2);
-  }
-  else{
-    residuals<-  PRESS<-  R2<- NULL;
-  }
-  
-  res <- list(call = match.call(), k = k, n = n, pred = pred, 
-      residuals = residuals, PRESS=PRESS, R2Pred = R2)
-
-  class(res)<- if(!is.null(test)) "knnReg" else "knnRegCV";
-  
-  return(res);
-}
 

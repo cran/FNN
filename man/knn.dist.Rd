@@ -7,8 +7,8 @@
 }
 \usage{
 
-  knn.dist(data, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
-  knnx.dist(data, query, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+  knn.dist(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  knnx.dist(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -60,7 +60,7 @@ Beygelzimer A., Kakade S. and Langford J. (2006),
     X<- rmvnorm(1000, mean=rep(0, 20), sigma(1, .5, 20))
     print(system.time(knn.dist(X)) )
     print(system.time(knn.dist(X, algorithm = "kd_tree")))
-    print(system.time(knn.dist(X, algorithm = "VR")))
+
   }
 }
 

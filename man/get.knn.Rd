@@ -8,8 +8,8 @@
   and the algorithm implemented in class package.
 }
 \usage{
-  get.knn(data, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
-  get.knnx(data, query, k=10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+  get.knn(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  get.knnx(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,8 +26,6 @@
 
   The \emph{kd tree} algorithm is implemented in the Approximate Near Neighbor (ANN) C++ library (see  \url{http://www.cs.umd.edu/~mount/ANN/}).
   The exact nearest neighbors are searched in this package.
-
-  The \emph{VR} algorithm is the one used in \pkg{class} package.
   
   The \emph{CR} algorithm is the \emph{VR} using distance \emph{1-x'y} assuming \code{x} and \code{y} are unit vectors.
   The \emph{brute} algorithm searches linearly. It is a naive method.
@@ -70,7 +68,6 @@ Beygelzimer A., Kakade S. and Langford J. (2006),
   get.knn(data, k=5)
   get.knnx(data, query, k=5)
   get.knnx(data, query, k=5, algo="kd_tree")
-  get.knnx(data, query, k=5, algo="VR")
 
 }
 

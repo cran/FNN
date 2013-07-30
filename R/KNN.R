@@ -5,7 +5,7 @@
 # Date:   December 12, 2008                                                    #
 #                                                                              #
 ################################################################################
-get.knn<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+get.knn<- function (data, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   algorithm<- match.arg(algorithm);  
   
@@ -23,7 +23,6 @@ get.knn<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR
   Cname<- switch(algorithm, 
               cover_tree = "get_KNN_cover",
               kd_tree= "get_KNN_kd",
-              VR = "get_KNN_VR",
               CR = "get_KNN_CR",
               brute = "get_KNN_brute"
   ); 
@@ -39,7 +38,7 @@ get.knn<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR
     
   return(list(nn.index=nn.index, nn.dist=nn.dist));    
 }
-get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+get.knnx<- function (data, query, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   #k neearest neighbor Euclidean distances
   algorithm<- match.arg(algorithm);	  
@@ -66,7 +65,6 @@ get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "
   Cname<- switch(algorithm, 
                 cover_tree = "get_KNNX_cover",
                 kd_tree= "get_KNNX_kd",                 
-                VR = "get_KNNX_VR",
                 CR = "get_KNNX_CR",
                 brute = "get_KNNX_brute"
   ); 
@@ -85,19 +83,19 @@ get.knnx<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "
   }
   return(list(nn.index=nn.index, nn.dist=nn.dist));
 }
-knn.index<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+knn.index<- function (data, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   get.knn(data, k, algorithm )$nn.index;
 }
-knn.dist<- function (data, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+knn.dist<- function (data, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   get.knn(data, k, algorithm )$nn.dist;
 }
-knnx.dist<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+knnx.dist<- function (data, query, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   get.knnx(data, query, k, algorithm )$nn.dist  
 }
-knnx.index<- function (data, query, k = 10, algorithm=c("cover_tree", "kd_tree", "VR", "CR", "brute"))
+knnx.index<- function (data, query, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
 {
   get.knnx(data, query, k, algorithm )$nn.index;
 }

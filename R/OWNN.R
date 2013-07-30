@@ -1,5 +1,5 @@
 #optimal weighted nn
-ownn<- function(train, test, cl, testcl=NULL, k=NULL, prob=FALSE, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+ownn<- function(train, test, cl, testcl=NULL, k=NULL, prob=FALSE, algorithm=c("kd_tree", "cover_tree", "brute"))
 {
   algorithm <- match.arg(algorithm)
   train <- as.matrix(train);

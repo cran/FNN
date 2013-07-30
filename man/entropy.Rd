@@ -3,7 +3,7 @@
 \title{Shannon Entropy}
 \description{KNN Shannon Entropy Estimators.}
 \usage{
-  entropy(X, k = 10, algorithm = c("brute", "kd_tree"))
+  entropy(X, k = 10, algorithm = c("kd_tree", "brute"))
 }
 
 \arguments{

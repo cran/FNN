@@ -5,7 +5,7 @@
 # Date:   December 12, 2008                                                    #
 #         2010-3-25 add entropy and crossentropy                               #
 ################################################################################
-entropy<- function (X, k=10, algorithm=c("brute", "kd_tree"))
+entropy<- function (X, k=10, algorithm=c("kd_tree", "brute"))
 {
   algorithm<- match.arg(algorithm);
 
@@ -20,19 +20,21 @@ entropy<- function (X, k=10, algorithm=c("brute", "kd_tree"))
   if (k >= n) stop("k must less than the sample size!")
 
   Cname<- switch(algorithm,
-              kd_tree= "KNN_MLD_kd",
+              kd_tree = "KNN_MLD_kd",
               brute = "KNN_MLD_brute"
   );
 
   MLD<- .C(Cname, t(X), as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
   # mean of log dist
-
-  H <- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(n) - digamma(1:k)
-
+  
+  #digamma(n) is more popular than log(n)  
+  #H <- log(n) - digamma(1:k) + p/2*log(pi) - lgamma(p/2+1) + p*MLD 
+  H <- digamma(n) - digamma(1:k) + p/2*log(pi) - lgamma(p/2+1) + p*MLD 
+  
   return(H)
 }
 
-crossentropy <- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+crossentropy <- function(X, Y, k=10, algorithm=c("kd_tree", "cover_tree", "brute"))
 {
   algorithm<- match.arg(algorithm);
 	if (!(is.numeric(X)&& is.numeric(Y))) stop("Data non-numeric");
@@ -48,13 +50,14 @@ crossentropy <- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cove
 	if(k>=n) stop("k must less than the sample size!");
 
 	dnn<- knnx.dist(Y, X, k=k, algorithm=algorithm);
-    MLD<- colMeans(log(dnn));
-	H<- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(m) - digamma(1:k)
+  MLD<- colMeans(log(dnn));
+	#H<- p*MLD + p/2*log(pi) - lgamma(p/2+1) + log(m) - digamma(1:k)
+  H <- digamma(m) - digamma(1:k) + p/2*log(pi) - lgamma(p/2+1) + p*MLD 
 
 	return (H);
 }
 
-KL.divergence<- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+KL.divergence<- function(X, Y, k=10, algorithm=c("kd_tree", "cover_tree", "brute"))
 {
   #Kullback-Leibler Distance
   algorithm<- match.arg(algorithm);
@@ -69,7 +72,7 @@ KL.divergence<- function(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cove
 
 }
 
-KL.dist<- function(X, Y, k=10,  algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+KL.dist<- function(X, Y, k=10,  algorithm=c("kd_tree", "cover_tree", "brute"))
 {
   #Symmetric Kullback-Leibler divergence. i.e. Kullback-Leibler distance
   algorithm<- match.arg(algorithm);
@@ -119,3 +122,78 @@ KLx.dist<- function (X, Y, k = 10, algorithm="kd_tree")
 }
 
 
+mutinfo.R<- function(X, Y, k = 10, direct=TRUE)
+{
+  #mutual information of X and Y 
+  #KSG method by Kraskov, Stogbauer and Grassberger
+  #slow. for test only
+  
+  if(is.vector(X)+is.vector(Y) < 2) stop("X and Y must be vectors.");
+  
+  n<- length(X);
+
+  nx<- ny<- integer(n);
+  di<- double(n);
+  
+  for (i in 1:n){
+    dx<- abs(X[i]- X);
+    dy<- abs(Y[i]- Y);    
+    r<- ifelse (dx > dy, dx, dy);
+
+    di[i]<- max(r[rank(r)<= (k+1)]); #exclude self-match
+
+    nx[i]<- sum(dx < di[i]); #include self-match
+    ny[i]<- sum(dy < di[i]); #include self-match
+  }      
+  
+  mi<- digamma(n) + digamma(k) - mean(digamma(nx) + digamma(ny));
+
+  return(mi);
+}
+
+
+mutinfo<- function(X, Y, k = 10, direct=TRUE)
+{
+  #mutual information of X and Y
+  
+  #check data
+  if (!is.numeric(X))  stop("Data non-numeric")
+  if (any(is.na(X)))   stop("Data include NAs")  
+  if (!is.matrix(X))   X <- matrix(X)
+  if (storage.mode(X) == "integer")  storage.mode(X) <- "double"
+    
+  if (!is.numeric(Y))  stop("Data non-numeric")
+  if (any(is.na(Y)))   stop("Data include NAs")
+  if (!is.matrix(Y))   Y <- matrix(Y)
+  if (storage.mode(Y) == "integer")  storage.mode(Y) <- "double"
+
+  
+  n <- nrow(X)
+
+  if (k >= n) stop("k must less than the sample size!")
+
+  p1<- ncol(X);
+  p2<- ncol(Y);
+
+  
+  if (direct){
+    #KSG method by Kraskov, Stogbauer and Grassberger
+    
+    #res<- .C("mutinfo", rbind(X, Y), as.integer(k), n, nx = integer(n), ny = integer(n), DUP=FALSE)    
+    res<- .C("mdmutinfo", t(X), t(Y), as.integer(p1), as.integer(p2), as.integer(k), n, nx = integer(n), ny = integer(n), DUP=FALSE)    
+    nx<- res$nx;
+    ny<- res$ny; 
+
+    mi<- digamma(n) + digamma(k) - mean(digamma(nx) + digamma(ny));
+
+  }
+  else {
+    algorithm = "kd_tree";
+    Hx<- entropy(X, k, algorithm);
+    Hy<- entropy(Y, k, algorithm)
+    H<-  entropy (cbind(X, Y), k, algorithm);
+    mi<- Hx + Hy - H;
+  }  
+  
+  return(mi);
+}

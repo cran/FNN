@@ -6,7 +6,7 @@
 \title{Kullback-Leibler Divergence}
 \description{Compute Kullback-Leibler divergence.}
 \usage{
-  KL.divergence(X, Y, k = 10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+  KL.divergence(X, Y, k = 10, algorithm=c("kd_tree", "cover_tree", "brute"))
   KLx.divergence(X, Y, k = 10, algorithm="kd_tree")
 }
 
@@ -24,7 +24,7 @@ Return the Kullback-Leibler divergence from \code{X} to \code{Y}.
 
 \details{
    If \code{p(x)} and \code{q(x)} are two continuous probability density functions,
-   then the Kullback-Leibler divergence from \code{p} to \code{q} is defined as
+   then the Kullback-Leibler divergence of \code{q} from \code{p} is defined as
    \eqn{E_p[\log \frac{p(x)}{q(x)}]}{E_p[log p(x)/q(x)]}.
 
    \code{KL.*} versions return divergences from \code{C} code to \code{R} but \code{KLx.*} do not.

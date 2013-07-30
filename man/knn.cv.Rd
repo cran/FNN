@@ -6,24 +6,16 @@
 \description{k-nearest neighbour classification cross-validation from training set.}
 
 \usage{
-knn.cv(train, cl, k = 1, l = 0, prob = FALSE, use.all = TRUE,
-      algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+knn.cv(train, cl, k = 1, prob = FALSE, algorithm=c("kd_tree", "cover_tree", "brute"))
 }
 \arguments{
 \item{train}{matrix or data frame of training set cases.}
 \item{cl}{factor of true classifications of training set}
 \item{k}{number of neighbours considered.}
-\item{l}{only implemented for "VR" algorithm. It is the minimum vote for definite decision, otherwise \code{doubt}. (More
-precisely, less than \code{k-l} dissenting votes are allowed, even
-if \code{k} is increased by ties.)
-}
 \item{prob}{if this is true, the proportion of the votes for the winning class
 are returned as attribute \code{prob}.
 }
-\item{use.all}{only implemented for "VR" algorithm for handling of ties. If true, all distances equal to the \code{k}th
-largest are included. If false, a random selection of distances
-equal to the \code{k}th is chosen to use exactly \code{k} neighbours.
-}
+
 \item{algorithm}{nearest neighbor search algorithm.}
 }
 \details{

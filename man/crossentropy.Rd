@@ -3,7 +3,7 @@
 \title{Cross Entropy}
 \description{KNN Cross Entropy Estimators.}
 \usage{
-  crossentropy(X, Y, k=10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+  crossentropy(X, Y, k=10, algorithm=c("kd_tree", "cover_tree", "brute"))
 }
 
 \arguments{
@@ -16,6 +16,12 @@
 
 \value{
   a vector of length \code{k} for crossentropy estimates using \code{1:k} nearest neighbors, respectively.
+}
+
+\details{
+   If \code{p(x)} and \code{q(x)} are two continuous probability density functions,
+   then the cross-entropy of \code{p} and \code{q} is defined as
+   \eqn{H(p;q) = E_p[-\log q(x)]}{H(p;q) = E_p[-\log q(x)]}.
 }
 
 \author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}

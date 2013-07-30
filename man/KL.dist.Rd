@@ -5,7 +5,7 @@
 \title{Kullback-Leibler Divergence}
 \description{Compute Kullback-Leibler symmetric distance.}
 \usage{
-  KL.dist(X, Y, k = 10, algorithm=c("VR", "brute", "kd_tree", "cover_tree"))
+  KL.dist(X, Y, k = 10, algorithm=c("kd_tree", "cover_tree", "brute"))
   KLx.dist(X, Y, k = 10, algorithm="kd_tree")    
 }
 
@@ -18,12 +18,12 @@
 }
 
 \value{
-Return the Kullback-Leibler distance between \code{X} to \code{Y}.
+Return the Kullback-Leibler distance between \code{X} and \code{Y}.
   
 }
 
 \details{ 
-   Kullback-Leibler distance is the sum of divergence from \code{p(x)} to  \code{q(x)} and from \code{q(x)} to  \code{p(x)}.
+   Kullback-Leibler distance is the sum of divergence \code{q(x)} from \code{p(x)}  and \code{p(x)} from \code{q(x)} .
    
    \code{KL.*} versions return distances from \code{C} code to \code{R} but \code{KLx.*} do not.
    
