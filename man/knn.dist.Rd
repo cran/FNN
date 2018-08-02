@@ -8,7 +8,8 @@
 \usage{
 
   knn.dist(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
-  knnx.dist(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  knnx.dist(data, query, k=10, algorithm=c("kd_tree", "cover_tree",
+           "CR", "brute"))
 
 }
 %- maybe also 'usage' for other objects documented here.
@@ -24,7 +25,7 @@
  return the Euclidiean distances of k nearest neighbors.
 }
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 Bentley J.L. (1975), \dQuote{Multidimensional binary search trees used for associative

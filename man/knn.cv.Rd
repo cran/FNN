@@ -6,7 +6,8 @@
 \description{k-nearest neighbour classification cross-validation from training set.}
 
 \usage{
-knn.cv(train, cl, k = 1, prob = FALSE, algorithm=c("kd_tree", "cover_tree", "brute"))
+knn.cv(train, cl, k = 1, prob = FALSE, algorithm=c("kd_tree",
+       "cover_tree", "brute"))
 }
 \arguments{
 \item{train}{matrix or data frame of training set cases.}
@@ -29,7 +30,7 @@ is decided by majority vote, with ties broken at random. If there are ties for t
 factor of classifications of training set. \code{doubt} will be returned as \code{NA}.
 distances and indice of k nearest neighbors are also returned as attributes.
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
   Ripley, B. D. (1996)

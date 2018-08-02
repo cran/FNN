@@ -33,7 +33,7 @@ Return the Kullback-Leibler divergence from \code{X} to \code{Y}.
 \seealso{
 \code{\link{KL.dist}}
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 S. Boltz, E. Debreuve and M. Barlaud (2007).

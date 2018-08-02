@@ -5,7 +5,8 @@
   k-nearest neighbor regression
 }
 \usage{
-knn.reg(train, test = NULL, y, k = 3, algorithm=c("kd_tree", "cover_tree", "brute"))
+knn.reg(train, test = NULL, y, k = 3, algorithm=c("kd_tree", 
+        "cover_tree", "brute"))
 }
 
 \arguments{
@@ -45,7 +46,7 @@ The returnedobject is a list containing at least the following components:
 \note{
   The code for \dQuote{VR} nearest neighbor searching is taken from \code{class} source
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \examples{
   if(require(chemometrics)){

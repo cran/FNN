@@ -50,9 +50,10 @@ P* parse_points(char *filename)
 {
   FILE *input = fopen(filename,"r");
   v_array<P * > parsed;
-  int ret;
   
   char c;
+
+  int ret;
 
   v_array<P> p;
 
@@ -72,7 +73,7 @@ P* parse_points(char *filename)
 	    ungetc(c,input);
 	    float f;
 	    ret = fscanf(input, "%f",&f);
-	    push(p, (P)f);
+	    if(ret>0) push(p, (P)f);
 	  }
 	  else
 	    if (c == '\n')

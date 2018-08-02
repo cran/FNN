@@ -8,7 +8,8 @@
 }
 \usage{
   knn.index(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
-  knnx.index(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  knnx.index(data, query, k=10, algorithm=c("kd_tree", "cover_tree", 
+             "CR", "brute"))
 
 }
 \arguments{
@@ -24,7 +25,7 @@
 return the indice of k nearest neighbors.
 }
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 Bentley J.L. (1975), \dQuote{Multidimensional binary search trees used for associative

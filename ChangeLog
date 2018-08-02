@@ -1,4 +1,10 @@
-		CHANGES AFTER 1.0
+
+		CHANGES IN FNN VERSION 1.1.2
+
+	o Remove C++ uses of 'register' keyword.
+	o Register native routines.
+
+		CHANGES IN FNN VERSION 1.1
 
   o mutinfo function for mutual information is added.
   o Rarely used VR algorithm is removed.

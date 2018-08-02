@@ -11,7 +11,8 @@
   \code{k}th nearest vector, all candidates are included in the vote.
 }
 \usage{
-  knn(train, test, cl, k = 1, prob = FALSE, algorithm=c("kd_tree", "cover_tree", "brute"))
+  knn(train, test, cl, k = 1, prob = FALSE, algorithm=c("kd_tree", 
+      "cover_tree", "brute"))
 }
 \arguments{
   \item{train}{matrix or data frame of training set cases.}
@@ -26,7 +27,7 @@
 \value{
 factor of classifications of test set. \code{doubt} will be returned as \code{NA}.
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 \references{
   B.D. Ripley (1996). \emph{Pattern Recognition and Neural Networks.} Cambridge.
 

@@ -5,12 +5,12 @@
 #define MAX_TIES 1000
 
 extern "C"{
-void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny, double *nn_dist)
+void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny)
  //Mutual Information
 {
   int		d = 2;		// Actual Dimension
-	int		n = *n_pts;	// Number of Data points
-	int		K = *kin;
+  int		n = *n_pts;	// Number of Data points
+  int		K = *kin;
   int   	k1, kn;
   int   	*pos = new int[MAX_TIES+K];
   double 	dx, dy, dist;
@@ -20,42 +20,42 @@ void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny, doub
   		kn = K;
   		for (int k = 0; k < kn; k++)	nndist[k] = 0.99 * DBL_MAX;
   		for (int j = 0; j < n; j++){
-          if(j == i) continue; //no self-match allowed
+          	if(j == i) continue; //no self-match allowed
 
-   	      dx = fabs(XY[i*d]-XY[j*d]);
+   	      	dx = fabs(XY[i*d]-XY[j*d]);
   	    	dy = fabs(XY[i*d+1]-XY[j*d+1]);
 
   	    	if(dx > dy ) dist = dx;
-          else dist = dy;
+          	else dist = dy;
 
   	    	if (dist <= nndist[K - 1] )
   			  for (int k = 0; k <= kn; k++)
-  		    	if (dist < nndist[k]) {
+  		    		if (dist < nndist[k]) {
       					for (k1 = kn; k1 > k; k1--) {
-      			    		nndist[k1] = nndist[k1 - 1];
-      			    		pos[k1] = pos[k1 - 1];
+      			    			nndist[k1] = nndist[k1 - 1];
+      			    			pos[k1] = pos[k1 - 1];
       					}
       					nndist[k] = dist;
 
       					pos[k] = j;
 
-      					if (nndist[kn] <= nndist[K - 1])	if (++kn == MAX_TIES - 1)  error("too many ties in knn");
-  				  	  break;
-  		    	}
+      					if (nndist[kn] <= nndist[K - 1]) if (++kn == MAX_TIES - 1)  error("too many ties in knn");
+  				  	break;
+  		    		}
 
-  	    	nndist[kn] = 0.99 * DBL_MAX;
-  		}
+  	    		nndist[kn] = 0.99 * DBL_MAX;
+  			}
 
-      nx[i] = 0;
-      ny[i] = 0;
+	      	nx[i] = 0;
+	      	ny[i] = 0;
 
-	    for (int j = 0; j < n; j++){
-        //if(j == i) continue; //no self-match allowed
-        dx = fabs(XY[i*d]-XY[j*d]);
-        dy = fabs(XY[i*d+1]-XY[j*d+1]);
-        if(dx < nndist[K-1]) nx[i]++;
-        if(dy < nndist[K-1]) ny[i]++;
-      }
+		for (int j = 0; j < n; j++){
+			//if(j == i) continue; //no self-match allowed
+			dx = fabs(XY[i*d]-XY[j*d]);
+			dy = fabs(XY[i*d+1]-XY[j*d+1]);
+			if(dx < nndist[K-1]) nx[i]++;
+			if(dy < nndist[K-1]) ny[i]++;
+	      }
 
 	}
 
@@ -64,15 +64,15 @@ void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny, doub
 } //end of mutinfo
 
 
-void mdmutinfo(double *X, double *Y, const int *xdim, const int *ydim, const int *kin, const int *n_pts, int* nx, int*ny, double *nn_dist)
+void mdmutinfo(double *X, double *Y, const int *xdim, const int *ydim, const int *kin, const int *n_pts, int* nx, int*ny)
  //Multidimensional Mutual Information
 {
   int		d1 = *xdim;		// Actual Dimension
   int		d2 = *ydim;		// Actual Dimension
-	int		n = *n_pts;	// Number of Data points
-	int		K = *kin;
-  int   k1, kn;
-  int   *pos = new int[MAX_TIES+K];
+  int		n = *n_pts;	// Number of Data points
+  int		K = *kin;
+  int   	k1, kn;
+  int   	*pos = new int[MAX_TIES+K];
   double 	dx, dy, dist, tmp;
   double  *nndist = new double[MAX_TIES+K];
 

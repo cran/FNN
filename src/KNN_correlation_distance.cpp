@@ -19,12 +19,12 @@ void get_KNN_CR(
              		)
 {
   int		d = *dim;		// Actual Dimension
-	int		n = *n_pts;	// Number of Data points
-	int   K = *kin;
-  int   k1, kn;
-  int   *pos = new int[MAX_TIES+K];
+  int		n = *n_pts;	// Number of Data points
+  int   	K = *kin;
+  int   	k1, kn;
+  int   	*pos = new int[MAX_TIES+K];
   double 	dist, tmp;
-  double *nndist= new double[MAX_TIES+K];
+  double 	*nndist= new double[MAX_TIES+K];
 
   for (int i = 0; i < n; i++) {
   		kn = K;
@@ -70,20 +70,20 @@ void get_KNN_CR(
 }
 
 void get_KNNX_CR(
-    const double *train, //data
+    	const double *train, //data
    	const double *test, //data
-		const int *kin,    //number of neighbors
-		const int *dim,      //dimension
-		const int *n_pts,   //number of training points
-		const int *m_pts,   //number of testing points
- 	  int   *nn_idx,     //indice of neighbors
+	const int *kin,    //number of neighbors
+	const int *dim,      //dimension
+	const int *n_pts,   //number of training points
+	const int *m_pts,   //number of testing points
+ 	int   *nn_idx,     //indice of neighbors
    	double *nn_dist    //distances of neighbors
  		)
 {
-	  int		d=*dim;		// Actual Dimension
-	  int		n=*n_pts;	// Number of Data points
-	  int		m=*m_pts;	// Number of Data points
-	  int   K = *kin;
+	int		d=*dim;		// Actual Dimension
+	int		n=*n_pts;	// Number of Data points
+	int		m=*m_pts;	// Number of Data points
+	int   K = *kin;
     int   k1, kn;
     int   *pos = new int[MAX_TIES+K];
     double dist, tmp;
@@ -125,7 +125,7 @@ void get_KNNX_CR(
   
   	}
 
-  delete[] pos;
+  	delete[] pos;
 	delete[] nndist;	
 	return;
 }

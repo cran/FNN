@@ -1,4 +1,13 @@
-#optimal weighted nn
+
+2012-10-17
+################################################################################
+# Search k nearest neighbors (optimal weighted nn)                             #
+# File:   OWNN.R                                                               #
+# Author: Shengqiao Li                                                         #
+# Date:   2012-10-17                                                           #
+#                                                                              #
+################################################################################
+
 ownn<- function(train, test, cl, testcl=NULL, k=NULL, prob=FALSE, algorithm=c("kd_tree", "cover_tree", "brute"))
 {
   algorithm <- match.arg(algorithm)

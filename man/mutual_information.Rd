@@ -1,6 +1,5 @@
 \name{mutinfo}
 \alias{mutinfo}
-\alias{mdmutinfo}
 \title{Mutual Information}
 \description{KNN Mutual Information Estimators.}
 \usage{
@@ -26,7 +25,7 @@
 }
 
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 

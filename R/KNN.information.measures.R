@@ -4,6 +4,7 @@
 # Author: Shengqiao Li                                                         #
 # Date:   December 12, 2008                                                    #
 #         2010-3-25 add entropy and crossentropy                               #
+#         2017-12-27 remove DUP=FALSE from .C                                  #
 ################################################################################
 entropy<- function (X, k=10, algorithm=c("kd_tree", "brute"))
 {
@@ -19,12 +20,12 @@ entropy<- function (X, k=10, algorithm=c("kd_tree", "brute"))
   p <- ncol(X)
   if (k >= n) stop("k must less than the sample size!")
 
-  Cname<- switch(algorithm,
-              kd_tree = "KNN_MLD_kd",
-              brute = "KNN_MLD_brute"
+  MLD<- switch(algorithm,
+              kd_tree = .C("KNN_MLD_kd", t(X), as.integer(k), p, n, MLD = double(k))$MLD,
+              brute = .C("KNN_MLD_brute", t(X), as.integer(k), p, n, MLD = double(k))$MLD
   );
 
-  MLD<- .C(Cname, t(X), as.integer(k), p, n, MLD = double(k), DUP = FALSE)$MLD
+   
   # mean of log dist
   
   #digamma(n) is more popular than log(n)  
@@ -97,7 +98,7 @@ KLx.divergence<- function (X, Y, k = 10, algorithm="kd_tree")
   if(d!=p) stop("Number of columns must be same!.");
   if(k>=n) warning("k should be less than sample size!");
 
-  .C("KL_divergence", t(X), t(Y), as.integer(k), d, n, m, KL = double(k), DUP=FALSE)$KL;
+  .C("KL_divergence", t(X), t(Y), as.integer(k), d, n, m, KL = double(k))$KL;
 
 }
 
@@ -117,7 +118,7 @@ KLx.dist<- function (X, Y, k = 10, algorithm="kd_tree")
   if(d!=p) stop("Number of columns must be same!.");
   if(k>=n) warning("k should be less than sample size!");
 
-  .C("KL_dist", t(X), t(Y), as.integer(k), d, n, m, KLD = double(k), DUP=FALSE)$KLD;
+  .C("KL_dist", t(X), t(Y), as.integer(k), d, n, m, KLD = double(k))$KLD;
 
 }
 
@@ -179,8 +180,8 @@ mutinfo<- function(X, Y, k = 10, direct=TRUE)
   if (direct){
     #KSG method by Kraskov, Stogbauer and Grassberger
     
-    #res<- .C("mutinfo", rbind(X, Y), as.integer(k), n, nx = integer(n), ny = integer(n), DUP=FALSE)    
-    res<- .C("mdmutinfo", t(X), t(Y), as.integer(p1), as.integer(p2), as.integer(k), n, nx = integer(n), ny = integer(n), DUP=FALSE)    
+    #res<- .C("mutinfo", rbind(X, Y), as.integer(k), n, nx = integer(n), ny = integer(n))    
+    res<- .C("mdmutinfo", t(X), t(Y), as.integer(p1), as.integer(p2), as.integer(k), n, nx = integer(n), ny = integer(n))    
     nx<- res$nx;
     ny<- res$ny; 
 

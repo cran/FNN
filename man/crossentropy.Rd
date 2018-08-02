@@ -24,7 +24,7 @@
    \eqn{H(p;q) = E_p[-\log q(x)]}{H(p;q) = E_p[-\log q(x)]}.
 }
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 S. Boltz, E. Debreuve and M. Barlaud (2007).

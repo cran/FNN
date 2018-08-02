@@ -9,7 +9,8 @@
 }
 \usage{
   get.knn(data, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
-  get.knnx(data, query, k=10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
+  get.knnx(data, query, k=10, algorithm=c("kd_tree", "cover_tree",
+	  "CR", "brute"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,7 +25,7 @@
   in the same O(log(n)) time as \emph{kd tree} given a fixed intrinsic dimensionality.
   Templated code from \url{http://hunch.net/~jl/projects/cover_tree/cover_tree.html} is used.
 
-  The \emph{kd tree} algorithm is implemented in the Approximate Near Neighbor (ANN) C++ library (see  \url{http://www.cs.umd.edu/~mount/ANN/}).
+  The \emph{kd tree} algorithm is implemented in the Approximate Near Neighbor (ANN) C++ library (see \url{http://www.cs.umd.edu/~mount/ANN/}).
   The exact nearest neighbors are searched in this package.
   
   The \emph{CR} algorithm is the \emph{VR} using distance \emph{1-x'y} assuming \code{x} and \code{y} are unit vectors.
@@ -39,7 +40,7 @@
 
 }
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{shli@stat.wvu.edu.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
 
 \references{
 Bentley J.L. (1975), \dQuote{Multidimensional binary search trees used for associative
@@ -68,6 +69,10 @@ Beygelzimer A., Kakade S. and Langford J. (2006),
   get.knn(data, k=5)
   get.knnx(data, query, k=5)
   get.knnx(data, query, k=5, algo="kd_tree")
+
+  th<- runif(10, min=0, max=2*pi)
+  data2<-  cbind(cos(th), sin(th))
+  get.knn(data2, k=5, algo="CR")
 
 }
 

@@ -3,6 +3,7 @@
 # File:   KNN.R                                                                #
 # Author: Shengqiao Li                                                         #
 # Date:   December 12, 2008                                                    #
+#         2017-12-27 remove DUP=FALSE from .C                                  #
 #                                                                              #
 ################################################################################
 get.knn<- function (data, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "brute"))
@@ -20,13 +21,14 @@ get.knn<- function (data, k = 10, algorithm=c("kd_tree", "cover_tree", "CR", "br
   d <- ncol(data);
 
   if(k>=n) warning("k should be less than sample size!");
-  Cname<- switch(algorithm, 
-              cover_tree = "get_KNN_cover",
-              kd_tree= "get_KNN_kd",
-              CR = "get_KNN_CR",
-              brute = "get_KNN_brute"
+  
+  knnres<- switch(algorithm, 
+              cover_tree = .C("get_KNN_cover", t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k)),
+              kd_tree= .C("get_KNN_kd", t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k)),
+              CR = .C("get_KNN_CR", t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k)),
+              brute = .C("get_KNN_brute", t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k))
   ); 
-  knnres<- .C(Cname, t(data), as.integer(k), d, n, nn.index = integer(n*k), nn.dist = double(n*k), DUP=FALSE);
+
                                            
   nn.index<-  matrix(knnres$nn.index, byrow=T, nrow=n, ncol=k);
   nn.dist<- matrix(knnres$nn.dist, byrow=T, nrow=n, ncol=k);
@@ -62,14 +64,13 @@ get.knnx<- function (data, query, k = 10, algorithm=c("kd_tree", "cover_tree", "
   if(d!=p) stop("Number of columns must be same!.");
   if(k>n) warning("k should be less than sample size!");
   
-  Cname<- switch(algorithm, 
-                cover_tree = "get_KNNX_cover",
-                kd_tree= "get_KNNX_kd",                 
-                CR = "get_KNNX_CR",
-                brute = "get_KNNX_brute"
+  knnres<- switch(algorithm, 
+                cover_tree = .C("get_KNNX_cover", t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k)),
+                kd_tree= .C("get_KNNX_kd", t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k)),                 
+                CR = .C("get_KNNX_CR", t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k)),
+                brute = .C("get_KNNX_brute", t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k))
   ); 
-  knnres<- .C(Cname, t(data), t(query), as.integer(k), d, n, m, nn.index = integer(m*k), nn.dist = double(m*k), DUP=FALSE);
-                                             
+                                            
   nn.index<- matrix(knnres$nn.index, byrow=T, nrow=m, ncol=k);
   nn.dist<-  matrix(knnres$nn.dist,  byrow=T, nrow=m, ncol=k);
 #2012_10_15

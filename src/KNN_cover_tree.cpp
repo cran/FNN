@@ -1,10 +1,12 @@
 /**************************************************************************\
-*	Cover tree near neighbours program                                       *
+*	Cover tree near neighbours program                                 *
 *  File: KNN_cover_tree.cpp                                                *
 *  Author: Shegnqiao Li                                                    *
-*  Cover tree will return more than k neighbors if there are more thant one*
+*  Cover tree will return more than k neighbors if there are more than one *
 *   kth distances                                                          *
 *  Label is added to the point to keep its ID for nearest neighbor indices *
+*  Date:                                                                   *
+*      2017-12-27 removed register                                         *
 \**************************************************************************/
 #include <vector>
 #include <algorithm>
@@ -18,9 +20,9 @@ v_array<label_point> copy_points(const double* data, int n, int d)
 {
   dim = d;
   #ifdef USING_R
-  register label_point* elems = Calloc(n, label_point);
+  label_point* elems = Calloc(n, label_point);
   #else
-  register label_point* elems = (label_point*)calloc(n, sizeof(label_point));  
+  label_point* elems = (label_point*)calloc(n, sizeof(label_point));  
   #endif            
   
   //converting  double to float doesn't help fewer than k neighbor problem.
@@ -126,7 +128,7 @@ void get_KNN_cover(double *data, const int *k,
 	const int	d=*p;		// Actual Dimension
 	const int n=*n_pts;	// Number of Data points
 	const int	K=*k + 1;		// Max. num of NN including self
-	register int ptr;
+	int ptr;
  
   v_array<v_array<label_point> > res;
 	v_array<label_point>  data_pts = copy_points(data, n, d);
@@ -189,15 +191,15 @@ void get_KNNX_cover(double *data,  double *query,
                     const int *n_pts, int* m_pts, 
                     int *nn_idx, double *nn_dist)
 {
-  const	int	d=*p;		// Actual Dimension
+  	const	int	d=*p;		// Actual Dimension
 	const int n=*n_pts;	// Number of Data points
 	const int m=*m_pts;	// Number of Query  points	
 	const int	K=*k;		// Max. num of NN including self
-	register int ptr;
+	int ptr;
  
   v_array<v_array<label_point> > res;
 
-	v_array<label_point>  data_pts = copy_points(data, n, d);	
+  v_array<label_point>  data_pts = copy_points(data, n, d);	
   node<label_point> top = batch_create(data_pts);
 
   v_array<label_point>  query_pts = copy_points(query, m, d);

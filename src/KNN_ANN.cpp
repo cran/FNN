@@ -1,8 +1,10 @@
 /******************************************************************************\
 * File: KNN_ANN.cpp                                                            *
-* K Nearest Neighbour Program                       				               *
+* K Nearest Neighbour Program                       			       *
 * Assume ANN lib allows Self-match                                             *
 * Tree construction is fast, search is slow.                                   *
+* Date:                                                                        *
+*      2017-12-27 removed keyword register                                     *
 \******************************************************************************/
 #include <ANN/ANN.h> // ANN header
 #include <R.h>       // R header
@@ -27,11 +29,11 @@ void get_KNN_brute(double *data, const int *k, const int *dim, const int *n_pts,
 	const int	n=*n_pts;	// Number of Data points
 	const int	K = *k+1;	// Max. num of NN. first one  (itself) will discarded.
 	const double		error_bound = 0.0;
-	register int ptr = 0;
+	int ptr = 0;
 
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
-  ANNpointArray	data_pts = new ANNpoint[n];
+        ANNpointArray	data_pts = new ANNpoint[n];
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -78,8 +80,8 @@ void get_KNNX_brute(double *data, double* query,
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor nn_dist
 //	ANNpointArray	data_pts  = annAllocPts(n, d);	// Base Data points
 //	ANNpointArray	query_pts  = annAllocPts(m, d);	// Query Data points
-    ANNpointArray	data_pts  = new ANNpoint[n];
-    ANNpointArray	query_pts  = new ANNpoint[m];
+        ANNpointArray	data_pts  = new ANNpoint[n];
+        ANNpointArray	query_pts  = new ANNpoint[m];
 
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
@@ -90,7 +92,7 @@ void get_KNNX_brute(double *data, double* query,
 
 	ANNbruteForce	*kd_tree	= new ANNbruteForce(data_pts, n, d);
 
- 	register int ptr = 0;
+ 	int ptr = 0;
 	for(int i = 0; i < m; i++)	// read query points
 	{
 	    kd_tree->annkSearch(	// search
@@ -128,12 +130,12 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 	const int	d=*dim;		// Actual Dimension
 	const int	n=*n_pts;	// Number of Data points
 	const int	K = *k+1;	// Max. num of NN. first one  (itself) will discarded.
-	const double		error_bound = 0.0;
-	register int ptr = 0;
+	const double	error_bound = 0.0;
+	int ptr = 0;
 	
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
-  ANNpointArray	data_pts = new ANNpoint[n];
+        ANNpointArray	data_pts = new ANNpoint[n];
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -174,14 +176,14 @@ void get_KNNX_kd(double *data, double* query,
 	const int				n=*n_pts;	// Number of Base Data points
 	const int				m=*m_pts;	// Number of Query Data points
 	const int				K = *k;		// Max. num of NN	
-	const double		error_bound = 0.0;
+	const double				error_bound = 0.0;
 	
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance		
 //	ANNpointArray	data_pts  = annAllocPts(n, d);	// Base Data points
 //	ANNpointArray	query_pts  = annAllocPts(m, d);	// Query Data points
-    ANNpointArray	data_pts  = new ANNpoint[n];
-    ANNpointArray	query_pts  = new ANNpoint[m];
+        ANNpointArray	data_pts  = new ANNpoint[n];
+        ANNpointArray	query_pts  = new ANNpoint[m];
 
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
@@ -192,7 +194,7 @@ void get_KNNX_kd(double *data, double* query,
 
 	ANNkd_tree	*kd_tree	= new ANNkd_tree(data_pts, n, d);	
   
- 	register int ptr = 0;	
+ 	int ptr = 0;	
 	for(int i = 0; i < m; i++)	// read query points
 	{
 	    kd_tree->annkSearch(	// search
@@ -237,7 +239,7 @@ void KNN_MLD_brute(double *data, const int *k, const int *dim,
 
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
-    ANNpointArray	data_pts  = new ANNpoint[n];
+	ANNpointArray	data_pts  = new ANNpoint[n];
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 
 	//copy data into n x d matrix from n*d vector column by column
@@ -316,7 +318,7 @@ void KNN_MLD_kd(double *data, const int *k, const int *dim,
 	delete[] index;
 	delete[] dist;	
 	delete kd_tree;
-  delete[] data_pts;
+        delete[] data_pts;
   
 	annClose();
 	
@@ -333,11 +335,11 @@ void KL_divergence(double *X, double* Y, const int *k, const int *dim,
 	const int			K = *k;		// Max. num of NN	
 	const double	error_bound = 0.0;
 	
-    double	*XX_dist= new double[K];
+        double	*XX_dist= new double[K];
   
 	double	*XY_dist= new double[K];
-    ANNpointArray	X_pts = new ANNpoint[n];		// X points
-    ANNpointArray	Y_pts = new ANNpoint[m];		// Y points
+        ANNpointArray	X_pts = new ANNpoint[n];		// X points
+        ANNpointArray	Y_pts = new ANNpoint[m];		// Y points
 	if(X_pts==NULL) error("Cannot allocate memroy for X vector!\n");
 	if(Y_pts==NULL) error("Cannot allocate memroy for Y vector!\n");
 		
@@ -357,9 +359,9 @@ void KL_divergence(double *X, double* Y, const int *k, const int *dim,
 	    for (int j = 0; j < K; j++)	 XY_dist[j] += log(dist[j]);	
 	}
 	
-  delete Y_tree;
+        delete Y_tree;
 //	annDeallocPts(Y_pts); // release memory ASAP
-  delete[] Y_pts;
+        delete[] Y_pts;
 	ANNkd_tree *X_tree = new ANNkd_tree(X_pts, n, d);	
 
 	for (int j = 0; j < K; j++)	 XX_dist[j] =  0.0;	   
@@ -369,14 +371,14 @@ void KL_divergence(double *X, double* Y, const int *k, const int *dim,
 	    for (int j = 0; j < K; j++)	 XX_dist[j] += log(dist[j+1]);		    
 	} 
 
-  delete[] index;
+        delete[] index;
 	delete[] dist;
  	delete X_tree;
 	delete[] X_pts;
 	annClose();
 
 	for (int j = 0; j < K; j++)	 
-    kl_dive[j] = log(double(m)/n)+ d*(XY_dist[j]-XX_dist[j])/2/n;	//divided by 2 because of squared distance
+        kl_dive[j] = log(double(m)/n)+ d*(XY_dist[j]-XX_dist[j])/2/n;	//divided by 2 because of squared distance
 
 	delete[] XX_dist;
 	delete[] XY_dist;
@@ -408,8 +410,8 @@ void KL_dist(double *X, double* Y, const int *k, const int *dim,
 	}
  	ANNidxArray		index = new ANNidx[K+1];		// Near neighbor indices
 	ANNdistArray	dist  = new ANNdist[K+1];		// Near neighbor squared distance
-  ANNpointArray	X_pts = new ANNpoint[n];		// X points
-  ANNpointArray	Y_pts = new ANNpoint[m];	  //Y points
+        ANNpointArray	X_pts = new ANNpoint[n];		// X points
+        ANNpointArray	Y_pts = new ANNpoint[m];	  //Y points
 	
 	if(X_pts==NULL) error("Cannot allocate memroy for X vector!\n");
 	if(Y_pts==NULL) error("Cannot allocate memroy for Y vector!\n");
@@ -452,14 +454,14 @@ void KL_dist(double *X, double* Y, const int *k, const int *dim,
 
 	delete[] index;
 	delete[] dist;
-  delete Y_tree;
+        delete Y_tree;
 
-  delete[] X_pts;
-  delete[] Y_pts;
+        delete[] X_pts;
+        delete[] Y_pts;
  	annClose();	
 
 	for (int j = 0; j < K; j++)	
-    kl_dist[j]=  d*(YX_dist[j]/m + XY_dist[j]/n - XX_dist[j]/n -YY_dist[j]/m)/2;	
+    	kl_dist[j]=  d*(YX_dist[j]/m + XY_dist[j]/n - XX_dist[j]/n -YY_dist[j]/m)/2;	
 
 	delete[] XX_dist;
 	delete[] YY_dist;
