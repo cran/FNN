@@ -6,7 +6,7 @@
 *   kth distances                                                          *
 *  Label is added to the point to keep its ID for nearest neighbor indices *
 *  Date:                                                                   *
-*      2017-12-27 removed register                                         *
+*      2017-12-27 removed                                         *
 \**************************************************************************/
 #include <vector>
 #include <algorithm>

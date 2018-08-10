@@ -4,7 +4,7 @@
 * Assume ANN lib allows Self-match                                             *
 * Tree construction is fast, search is slow.                                   *
 * Date:                                                                        *
-*      2017-12-27 removed keyword register                                     *
+*      2017-12-27 removed keyword                                     *
 \******************************************************************************/
 #include <ANN/ANN.h> // ANN header
 #include <R.h>       // R header

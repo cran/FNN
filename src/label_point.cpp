@@ -11,9 +11,9 @@ bool operator < ( const Id_dist &a, const Id_dist &b)
 
 float distance(label_point p1, label_point p2, float upper_bound)
 {
-  register float sum = 0.0;
-  register float d12;
-  register float max_sqd = upper_bound*upper_bound;
+  float sum = 0.0;
+  float d12;
+  float max_sqd = upper_bound*upper_bound;
 	
   //If using double and full distance, fewer than k neighbors may be found even k<<N
   for(int i=0; i<dim; i++){
