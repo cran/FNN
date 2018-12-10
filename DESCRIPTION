@@ -1,6 +1,6 @@
 Package: FNN
-Version: 1.1.2.1
-Date: 2018-08-01
+Version: 1.1.2.2
+Date: 2018-12-10
 Title: Fast Nearest Neighbor Search Algorithms and Applications
 Author: Alina Beygelzimer, Sham Kakadet and John Langford (cover tree library), 
         Sunil Arya and David Mount (ANN library 1.1.2 for the kd-tree approach), Shengqiao Li
@@ -13,9 +13,9 @@ Description: Cover-tree and kd-tree fast k-nearest neighbor search algorithms an
         including KNN classification, regression and information measures are implemented.
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2018-08-08 15:14:17 UTC; ripley
+Packaged: 2018-12-10 17:51:18 UTC; ripley
 Repository: CRAN
-Date/Publication: 2018-08-10 06:11:46 UTC
+Date/Publication: 2018-12-10 17:53:53 UTC
 X-CRAN-Original-Maintainer: Shengqiao Li <lishengqiao@yahoo.com>
 X-CRAN-Comment: Orphaned on 2018-08-10 as C++ issues were not corrected
         since 2017 despite reminders.

@@ -1,5 +1,5 @@
 79aa57df536a05a7160e783074db1404 *ChangeLog
-70c88c6eea4e6ce4a34643ac7f0595c7 *DESCRIPTION
+f9637b922678d194f8d3375d0dc7919a *DESCRIPTION
 923e534f1429905eb649400d64d0b9af *NAMESPACE
 e146a45987484153651a8f5228340049 *R/KNN.R
 39146368c8ece8867ff89368fcef6bb7 *R/KNN.information.measures.R
@@ -45,7 +45,7 @@ bcaa6b2bdb00ac5a70ae59ea7340d17c *src/kd_pr_search.cpp
 27c3774fae6c89d8d21acd869054b577 *src/kd_pr_search.h
 b47abdfff22634cf17de609bd4e3c449 *src/kd_search.cpp
 9f105012643b3aa1db62d8d18a652e94 *src/kd_search.h
-f4099512d7650c1243fd1d7345b5d8d7 *src/kd_split.cpp
+188acd972b53682cafad8020746e8e29 *src/kd_split.cpp
 5706cb95a0d506da9fb8b6d550a21510 *src/kd_split.h
 14a0bd015fafb297e491f8951479cbcc *src/kd_tree.cpp
 5a02fbfbadc9448715ce662fd83ac2a1 *src/kd_tree.h
