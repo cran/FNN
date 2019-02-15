@@ -58,7 +58,10 @@ void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny)
 	      }
 
 	}
-
+	
+	delete[] pos;
+	delete[] nndist;
+	
 	return;
 
 } //end of mutinfo
@@ -135,7 +138,10 @@ void mdmutinfo(double *X, double *Y, const int *xdim, const int *ydim, const int
       }
 
 	}
-
+	
+	delete[] pos;
+	delete[] nndist;
+	
 	return;
 
 } //end of Multidimensional Mutual Information

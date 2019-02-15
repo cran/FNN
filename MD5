@@ -1,5 +1,5 @@
-79aa57df536a05a7160e783074db1404 *ChangeLog
-f9637b922678d194f8d3375d0dc7919a *DESCRIPTION
+7f47607d00e2da41588cd1016882dec6 *ChangeLog
+bb33a32124aacd94f2635cce7059fdfe *DESCRIPTION
 923e534f1429905eb649400d64d0b9af *NAMESPACE
 e146a45987484153651a8f5228340049 *R/KNN.R
 39146368c8ece8867ff89368fcef6bb7 *R/KNN.information.measures.R
@@ -24,7 +24,7 @@ af0cdd879859743d72ac208ddfd5822d *src/ANN.cpp
 a15e118292014e1592b283427c173a48 *src/KNN_correlation_distance.cpp
 d83a58dc048ad8f316dda75fd5742ed8 *src/KNN_cover_test.cpp
 53667ca52387ea647cf93ee6e0e595bf *src/KNN_cover_tree.cpp
-9f367e9e8ef358f56e6213dd66983c12 *src/KNN_mutual_information.cpp
+48b6aaef5afe716798bcd063df1b5d1b *src/KNN_mutual_information.cpp
 164fb069da9787b7c58dd6f10d6ccafc *src/Makevars
 daea0872a5e54411129135a19d69bec9 *src/Makevars.win
 581b55d86ec8bb94d028e69f0b95d44f *src/bd_fix_rad_search.cpp

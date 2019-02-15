@@ -1,4 +1,7 @@
+	  CHANGES IN FNN VERSION 1.1.3
 
+	o Fix memory leakage for mutual information calculation
+	
 		CHANGES IN FNN VERSION 1.1.2
 
 	o Remove C++ uses of 'register' keyword.
