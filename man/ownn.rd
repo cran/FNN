@@ -24,7 +24,7 @@
 \value{
   a list includes k, predictions by ordinary knn, optimal weighted knn and bagged knn, and accuracies if class labels of test data set are given. 
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 \references{
   Richard J. Samworth (2012),
   \dQuote{Optimal Weighted Nearest Neighbor Classifiers,} \emph{Annals of Statistics},  \bold{40:5}, 2733-2763.

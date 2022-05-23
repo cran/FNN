@@ -32,7 +32,7 @@ Return the Kullback-Leibler distance between \code{X} and \code{Y}.
   \code{\link{KL.divergence}}.
 
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 
 \references{
 S. Boltz, E. Debreuve and M. Barlaud (2007).

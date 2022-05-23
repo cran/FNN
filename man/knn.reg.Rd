@@ -46,7 +46,7 @@ The returnedobject is a list containing at least the following components:
 \note{
   The code for \dQuote{VR} nearest neighbor searching is taken from \code{class} source
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 
 \examples{
   if(require(chemometrics)){

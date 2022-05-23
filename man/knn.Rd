@@ -27,7 +27,7 @@
 \value{
 factor of classifications of test set. \code{doubt} will be returned as \code{NA}.
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 \references{
   B.D. Ripley (1996). \emph{Pattern Recognition and Neural Networks.} Cambridge.
 

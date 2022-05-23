@@ -16,7 +16,7 @@
   a vector of length \code{k} for entropy estimates using \code{1:k} nearest neighbors, respectively.
 }
 
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 
 \references{
 

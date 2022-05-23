@@ -30,7 +30,7 @@ is decided by majority vote, with ties broken at random. If there are ties for t
 factor of classifications of training set. \code{doubt} will be returned as \code{NA}.
 distances and indice of k nearest neighbors are also returned as attributes.
 }
-\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com.}}
+\author{Shengqiao Li. To report any bugs or suggestions please email: \email{lishengqiao@yahoo.com}}
 
 \references{
   Ripley, B. D. (1996)
