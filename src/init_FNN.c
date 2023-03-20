@@ -100,7 +100,7 @@ void R_init_FNN(DllInfo *info)
 
 	R_registerRoutines(info, cMethods, NULL, NULL, NULL);
 	R_useDynamicSymbols(info, FALSE);
-   	R_forceSymbols(info, TRUE);
+   	// R_forceSymbols(info, TRUE);
 
 }
 

@@ -23,7 +23,7 @@
 \details{
   The \emph{cover tree} is O(n) space data structure which allows us to answer queries
   in the same O(log(n)) time as \emph{kd tree} given a fixed intrinsic dimensionality.
-  Templated code from \url{http://hunch.net/~jl/projects/cover_tree/cover_tree.html} is used.
+  Templated code from \url{https://hunch.net/~jl/projects/cover_tree/cover_tree.html} is used.
 
   The \emph{kd tree} algorithm is implemented in the Approximate Near Neighbor (ANN) C++ library (see \url{http://www.cs.umd.edu/~mount/ANN/}).
   The exact nearest neighbors are searched in this package.
