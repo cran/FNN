@@ -51,6 +51,6 @@ S. Boltz, E. Debreuve and M. Barlaud (2009).
     Y<- rexp(10000, rate=0.4)
 
     KL.divergence(X, Y, k=5)
-    #theoretical divergence = log(0.2/0.4)+(0.4-0.2)-1 = 1-log(2) = 0.307
+    #theoretical divergence = log(0.2/0.4)+(0.4/0.2)-1 = 1-log(2) = 0.307
 }
 \keyword{manip}

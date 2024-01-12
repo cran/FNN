@@ -1,5 +1,5 @@
-7f47607d00e2da41588cd1016882dec6 *ChangeLog
-8aa341d11fe3eb7a90a842103188243c *DESCRIPTION
+4fff0725ef748ccb57210b01abc7f420 *ChangeLog
+99becfe59dddd9490fb563c922eecb0d *DESCRIPTION
 923e534f1429905eb649400d64d0b9af *NAMESPACE
 e146a45987484153651a8f5228340049 *R/KNN.R
 39146368c8ece8867ff89368fcef6bb7 *R/KNN.information.measures.R
@@ -7,7 +7,7 @@ fcc4169d79bf6333263164a1e9e569f1 *R/KNNCR.R
 0490c237b8f178545367ffbcb87e82a4 *R/OWNN.R
 28048af675ad1c475b5329d58d45ca7c *inst/COPYRIGHTS
 4fe52314de67c43e8fa4b99489a53177 *man/KL.dist.Rd
-47521994a976f76448d948b46d89faf8 *man/KL.divergence.Rd
+356019980212fbe1b31b4a38a0bcb7a0 *man/KL.divergence.Rd
 a7b477e1a5550ec2629e48932470dd0e *man/crossentropy.Rd
 ad79df1bb93687d7d1bd58a5f46c3f42 *man/entropy.Rd
 c1c1880922a3834dc2424ae2faeb190d *man/get.knn.Rd
@@ -19,11 +19,11 @@ c1c1880922a3834dc2424ae2faeb190d *man/get.knn.Rd
 102130ce8592d18cccc82a1ee823f7c4 *man/mutual_information.Rd
 3fee7681894330f08a228021c8939e9d *man/ownn.rd
 78091a509e2b0d1e57894f7d393ce2e8 *man/print.knnRegCV.Rd
-af0cdd879859743d72ac208ddfd5822d *src/ANN.cpp
-2bb6f65e94fac36a50436d9acfd57af8 *src/KNN_ANN.cpp
+2ed9960257d1e902a3166c7bcf487946 *src/ANN.cpp
+b3168f46e56ea71791c0880949598d01 *src/KNN_ANN.cpp
 a15e118292014e1592b283427c173a48 *src/KNN_correlation_distance.cpp
 d83a58dc048ad8f316dda75fd5742ed8 *src/KNN_cover_test.cpp
-53667ca52387ea647cf93ee6e0e595bf *src/KNN_cover_tree.cpp
+fad791c8d8e08fd21d416f75f5c9f5e1 *src/KNN_cover_tree.cpp
 48b6aaef5afe716798bcd063df1b5d1b *src/KNN_mutual_information.cpp
 164fb069da9787b7c58dd6f10d6ccafc *src/Makevars
 daea0872a5e54411129135a19d69bec9 *src/Makevars.win
@@ -37,7 +37,7 @@ b8d59ae85cf1b9591e279a05d752dc1a *src/bd_tree.cpp
 f156835cc8f60a92e7e6982882894a89 *src/include/ANN/ANN.h
 01e516b35b438e720b5dcf2763c4ab06 *src/include/ANN/ANNperf.h
 02390a8bf15826c45a3828a73c017b47 *src/include/ANN/ANNx.h
-25e21330f84e11e51aa85b3bb634f328 *src/init_FNN.c
+b9d7dc82b47ff6c92279cf9876cd5b0a *src/init_FNN.c
 2df19cfbe47f342f8743b38514c03196 *src/kd_dump.cpp
 f3490869a5fb28975892d465bbd1642a *src/kd_fix_rad_search.cpp
 55878b078710ca33e3d14a48dd8d79f4 *src/kd_fix_rad_search.h

@@ -1,3 +1,11 @@
+	  CHANGES IN FNN VERSION 1.1.4
+
+	o get.knn (cover_tree) will not return the self as the first neighbor. 
+	  kd_tree and brute may still return self as the first neighbor even there are other identical data points.
+	
+	o fixed the typo in the theoretical divergence example of KL.divergence manual
+
+
 	  CHANGES IN FNN VERSION 1.1.3
 
 	o Fix memory leakage for mutual information calculation
@@ -24,7 +32,7 @@
 
 		CHANGES IN FNN VERSION 0.6-3
 
-  o Remove links to some cross-refence packages which may not-yet-installed.
+  o Remove links to some cross-reference packages which may not-yet-installed.
   o Add suggested packages
   o Add the brute-force (linear scan) method.
 

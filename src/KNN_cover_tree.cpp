@@ -6,7 +6,8 @@
 *   kth distances                                                          *
 *  Label is added to the point to keep its ID for nearest neighbor indices *
 *  Date:                                                                   *
-*      2017-12-27 removed                                         *
+*      2017-12-27 removed keyword                                        *
+*	   2022-02-04 discard self instead of the first nn for get_KNN_cover   *
 \**************************************************************************/
 #include <vector>
 #include <algorithm>
@@ -100,7 +101,7 @@ void get_KNN_dist_cover(double *data, const int *k,
 
   	  if(K>=res[i].index){
         printf("Cover tree only found %d neighbors for point %d.\n", res[i].index-2, res[i][0].label+1);
-        printf("%d points are in the vector.\n", dist.size());        
+        printf("%zu points are in the vector.\n", dist.size());        
      }
      
 	    ptr = res[i][0].label*(*k); //searching is not in order. Reoder.  Shengqiao Li 3/12/2010  
@@ -153,31 +154,50 @@ void get_KNN_cover(double *data, const int *k,
     #endif       
     if(K>=res[i].index){
         printf("Cover tree only found %d neighbors for point %d.\n", res[i].index-2, res[i][0].label+1);
-        printf("%d points are in the vector:", dist.size());
+        printf("%zu points are in the vector:", dist.size());
     #ifdef DEBUG
         for(unsigned int j=0; j<dist.size(); j++) printf("%d ", dist.at(j).id);
         printf("\n");
     #endif
     }
     
- 	  ptr= (*k)*res[i][0].label; //position of results of ith point. 
-    for (int j = 1; j < K; j++)  //discard itself  and extra neighbors
+ 	ptr= (*k)*res[i][0].label; //position of results of ith point. 
+	
+/*     for (int j = 1; j < K; j++)  //discard itself  and extra neighbors
     {  
        if(j<res[i].index-1){   
           nn_idx[ptr] = dist.at(j).id;	
-    	  	nn_dist[ptr] = dist.at(j).dist;
+    	  nn_dist[ptr] = dist.at(j).dist;
        }
        else{
           nn_idx[ptr] =-1;	
-    	  	nn_dist[ptr] = numeric_limits<double>::quiet_NaN();
+    	  nn_dist[ptr] = numeric_limits<double>::quiet_NaN();
        }
 
- 		    ptr++;
-    	}
-      dist.clear();
+ 	   ptr++;
+    } */
+	
+    for (int j = 0; j < K; j++)  //discard itself  and extra neighbors
+    {  
+       if(j<res[i].index-1){   
+		  if(dist.at(j).id != res[i][0].label+1){
+			  nn_idx[ptr] = dist.at(j).id;	
+			  nn_dist[ptr] = dist.at(j).dist;
+			  ptr++;
+		  }
+       }
+       else{
+          nn_idx[ptr] =-1;	
+    	  nn_dist[ptr] = numeric_limits<double>::quiet_NaN();
+		  ptr++;
+       }
+
+    } 
+	
+    dist.clear();
           
-    	free(res[i].elements);
-   }
+	free(res[i].elements);
+  }
   
   free(res.elements);	
   free_nodes(top);       
@@ -218,7 +238,7 @@ void get_KNNX_cover(double *data,  double *query,
 
        if(K>=res[i].index){
           printf("Cover tree only found %d neighbors for point %d.\n", res[i].index-1, res[i][0].label+1);
-          printf("%d points are in the vector.\n", dist.size());        
+          printf("%zu points are in the vector.\n", dist.size());        
       }
       
       ptr= (*k)*res[i][0].label; //position of results of ith point.       

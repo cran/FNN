@@ -1,10 +1,10 @@
 /******************************************************************************\
 * File: KNN_ANN.cpp                                                            *
-* K Nearest Neighbour Program                       			       *
+* K Nearest Neighbour Program                       			               *
 * Assume ANN lib allows Self-match                                             *
 * Tree construction is fast, search is slow.                                   *
 * Date:                                                                        *
-*      2017-12-27 removed keyword                                     *
+*      2017-12-27 removed keyword                                              *
 \******************************************************************************/
 #include <ANN/ANN.h> // ANN header
 #include <R.h>       // R header
@@ -33,7 +33,7 @@ void get_KNN_brute(double *data, const int *k, const int *dim, const int *n_pts,
 
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
-        ANNpointArray	data_pts = new ANNpoint[n];
+    ANNpointArray	data_pts = new ANNpoint[n];
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -49,12 +49,24 @@ void get_KNN_brute(double *data, const int *k, const int *dim, const int *n_pts,
 			dist,				  // squared distance
 			error_bound);		  // error bound
 
-	    for (int j = 1; j < K; j++)      //return result row by row
+	    for (int j = 1; j < K; j++)      //return result row by row. The first nn is discarded
 	    {
 	    	nn_dist[ptr] = sqrt(dist[j]);	// unsquare distance
             nn_idx[ptr]  = index[j] + 1;	// put indexes in returned array
 			ptr++;
 	    } // end inner for
+		
+/*		//discard self instead of the first nn for get_KNN_kd and get_KNN_brute. Not working
+	    for (int j = 0; j < K; j++)      //return result row by row
+	    {	
+			if(index[j] != i){
+				nn_dist[ptr] = sqrt(dist[j]);	// unsquare distance
+				nn_idx[ptr]  = index[j] + 1;	// put indexes in returned array
+				ptr++;
+				nn++;
+			}
+	    } // end inner for		
+*/		
 	} // end for
 
 	delete[] index;
@@ -80,8 +92,8 @@ void get_KNNX_brute(double *data, double* query,
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor nn_dist
 //	ANNpointArray	data_pts  = annAllocPts(n, d);	// Base Data points
 //	ANNpointArray	query_pts  = annAllocPts(m, d);	// Query Data points
-        ANNpointArray	data_pts  = new ANNpoint[n];
-        ANNpointArray	query_pts  = new ANNpoint[m];
+    ANNpointArray	data_pts  = new ANNpoint[n];
+    ANNpointArray	query_pts  = new ANNpoint[m];
 
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
@@ -135,7 +147,7 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 	
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
-        ANNpointArray	data_pts = new ANNpoint[n];
+    ANNpointArray	data_pts = new ANNpoint[n];
 	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
 	
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -153,10 +165,22 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 
 	    for (int j = 1; j < K; j++)      //return result row by row
 	    {
-	    	nn_dist[ptr] = sqrt(dist[j]);	// unsquare distance
-			  nn_idx[ptr]  = index[j] + 1;	// put indexes in returned array
-			  ptr++;
+			nn_dist[ptr] = sqrt(dist[j]);	// unsquare distance
+			nn_idx[ptr]  = index[j] + 1;	// put indexes in returned array
+			ptr++;
 	    } // end inner for
+/*		//discard self instead of the first nn for get_KNN_kd and get_KNN_brute. Not working
+	    for (int j = 0; j < K; j++)      //return result row by row
+	    {	
+			if(index[j] != i){
+				nn_dist[ptr] = sqrt(dist[j]);	// unsquare distance
+				nn_idx[ptr]  = index[j] + 1;	// put indexes in returned array
+				ptr++;
+			}
+	    } // end inner for
+*/		
+				
+		
 	} // end for
 
 	delete[] index;
