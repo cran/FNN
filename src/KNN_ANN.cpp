@@ -34,7 +34,7 @@ void get_KNN_brute(double *data, const int *k, const int *dim, const int *n_pts,
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
     ANNpointArray	data_pts = new ANNpoint[n];
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
 
 	Rvector2ANNarray(data_pts, data, n, d);
 
@@ -95,8 +95,8 @@ void get_KNNX_brute(double *data, double* query,
     ANNpointArray	data_pts  = new ANNpoint[n];
     ANNpointArray	query_pts  = new ANNpoint[m];
 
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
-	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
+	if(query_pts==NULL) Rf_error("Cannot allocate memroy for query data matrix!\n");
 
 	//copy data into  matrix from a vector column by column
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -148,7 +148,7 @@ void get_KNN_kd(double *data, const int *k, const int *dim, const int *n_pts, in
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
     ANNpointArray	data_pts = new ANNpoint[n];
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
 	
 	Rvector2ANNarray(data_pts, data, n, d);
 	
@@ -209,8 +209,8 @@ void get_KNNX_kd(double *data, double* query,
         ANNpointArray	data_pts  = new ANNpoint[n];
         ANNpointArray	query_pts  = new ANNpoint[m];
 
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
-	if(query_pts==NULL) error("Cannot allocate memroy for query data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
+	if(query_pts==NULL) Rf_error("Cannot allocate memroy for query data matrix!\n");
 		
 	//copy data into  matrix from a vector column by column
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -264,7 +264,7 @@ void KNN_MLD_brute(double *data, const int *k, const int *dim,
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor squared distance
 	ANNpointArray	data_pts  = new ANNpoint[n];
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
 
 	//copy data into n x d matrix from n*d vector column by column
 	Rvector2ANNarray(data_pts, data, n, d);
@@ -312,7 +312,7 @@ void KNN_MLD_kd(double *data, const int *k, const int *dim,
 	ANNidxArray		index = new ANNidx[K];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K];		// Near neighbor nn_dist	
     ANNpointArray	data_pts  = new ANNpoint[n];
-	if(data_pts==NULL) error("Cannot allocate memroy for data matrix!\n");
+	if(data_pts==NULL) Rf_error("Cannot allocate memroy for data matrix!\n");
 			
 	//copy data into n x d matrix from n*d vector column by column
 	Rvector2ANNarray(data_pts, data, n, d);  	    
@@ -364,8 +364,8 @@ void KL_divergence(double *X, double* Y, const int *k, const int *dim,
 	double	*XY_dist= new double[K];
         ANNpointArray	X_pts = new ANNpoint[n];		// X points
         ANNpointArray	Y_pts = new ANNpoint[m];		// Y points
-	if(X_pts==NULL) error("Cannot allocate memroy for X vector!\n");
-	if(Y_pts==NULL) error("Cannot allocate memroy for Y vector!\n");
+	if(X_pts==NULL) Rf_error("Cannot allocate memroy for X vector!\n");
+	if(Y_pts==NULL) Rf_error("Cannot allocate memroy for Y vector!\n");
 		
  	ANNidxArray		index = new ANNidx[K+1];		// Near neighbor indices
 	ANNdistArray	dist = new ANNdist[K+1];		// Near neighbor squared distance
@@ -437,8 +437,8 @@ void KL_dist(double *X, double* Y, const int *k, const int *dim,
         ANNpointArray	X_pts = new ANNpoint[n];		// X points
         ANNpointArray	Y_pts = new ANNpoint[m];	  //Y points
 	
-	if(X_pts==NULL) error("Cannot allocate memroy for X vector!\n");
-	if(Y_pts==NULL) error("Cannot allocate memroy for Y vector!\n");
+	if(X_pts==NULL) Rf_error("Cannot allocate memroy for X vector!\n");
+	if(Y_pts==NULL) Rf_error("Cannot allocate memroy for Y vector!\n");
 	
 	//copy data into a matrix from a R vector column by column
 	Rvector2ANNarray(X_pts, X, n, d);

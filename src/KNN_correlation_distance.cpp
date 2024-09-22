@@ -50,7 +50,7 @@ void get_KNN_CR(
       			
       					pos[k] = j;
       					if (nndist[kn] <= nndist[K - 1])
-      						if (++kn == MAX_TIES - 1)  error("too many ties in knn");
+      						if (++kn == MAX_TIES - 1)  Rf_error("too many ties in knn");
       						// if k = MAX_TIES/2-1, error occurs too!    						
   				  	  break;
   		    	}
@@ -111,7 +111,7 @@ void get_KNNX_CR(
   			
     					pos[k] = j;
     					if (nndist[kn] <= nndist[K - 1])
-    			    		if (++kn == MAX_TIES - 1) error("too many ties in knn");
+    			    		if (++kn == MAX_TIES - 1) Rf_error("too many ties in knn");
     					break;
   		    	}
   

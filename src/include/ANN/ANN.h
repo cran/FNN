@@ -128,7 +128,7 @@
   #include "R.h" 
   #ifdef USING_RPRINT
     #define printf Rprintf
-    #define exit error
+    #define exit Rf_error
   //Rprintf only used within R.
   //Not for standalone program  linked with FNN library. (It will crash on Windows)
   #endif  

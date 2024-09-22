@@ -21,7 +21,7 @@ v_array<label_point> copy_points(const double* data, int n, int d)
 {
   dim = d;
   #ifdef USING_R
-  label_point* elems = Calloc(n, label_point);
+  label_point* elems = R_Calloc(n, label_point);
   #else
   label_point* elems = (label_point*)calloc(n, sizeof(label_point));  
   #endif            
@@ -48,7 +48,7 @@ v_array<label_point> copy_points(const double* data, int n, int d)
 void free_data_pts( v_array<label_point> data_pts)
 {
   #ifdef USING_R
-    Free(data_pts.elements);
+    R_Free(data_pts.elements);
   #else
     free(data_pts.elements);
   #endif

@@ -1,5 +1,5 @@
 4fff0725ef748ccb57210b01abc7f420 *ChangeLog
-99becfe59dddd9490fb563c922eecb0d *DESCRIPTION
+347b0e0e6e3768d82fdfa5f126892470 *DESCRIPTION
 923e534f1429905eb649400d64d0b9af *NAMESPACE
 e146a45987484153651a8f5228340049 *R/KNN.R
 39146368c8ece8867ff89368fcef6bb7 *R/KNN.information.measures.R
@@ -20,11 +20,11 @@ c1c1880922a3834dc2424ae2faeb190d *man/get.knn.Rd
 3fee7681894330f08a228021c8939e9d *man/ownn.rd
 78091a509e2b0d1e57894f7d393ce2e8 *man/print.knnRegCV.Rd
 2ed9960257d1e902a3166c7bcf487946 *src/ANN.cpp
-b3168f46e56ea71791c0880949598d01 *src/KNN_ANN.cpp
-a15e118292014e1592b283427c173a48 *src/KNN_correlation_distance.cpp
+f575e834138b374a9dabc0c31c953132 *src/KNN_ANN.cpp
+4ca97213c9613c225fe06c3980c23516 *src/KNN_correlation_distance.cpp
 d83a58dc048ad8f316dda75fd5742ed8 *src/KNN_cover_test.cpp
-fad791c8d8e08fd21d416f75f5c9f5e1 *src/KNN_cover_tree.cpp
-48b6aaef5afe716798bcd063df1b5d1b *src/KNN_mutual_information.cpp
+cf0ac281028335e5f6da65fb31fc8248 *src/KNN_cover_tree.cpp
+9439a478b4813ce257e65f8e25da45fa *src/KNN_mutual_information.cpp
 164fb069da9787b7c58dd6f10d6ccafc *src/Makevars
 daea0872a5e54411129135a19d69bec9 *src/Makevars.win
 581b55d86ec8bb94d028e69f0b95d44f *src/bd_fix_rad_search.cpp
@@ -34,7 +34,7 @@ b8d59ae85cf1b9591e279a05d752dc1a *src/bd_tree.cpp
 76d2a54c8dc5c0356e945ceb60a3e9fe *src/bd_tree.h
 17c58f7ebc260012b27ef3950c41c0c5 *src/brute.cpp
 37cb1298188844abdb975e5560ad64a6 *src/cover_tree.h
-f156835cc8f60a92e7e6982882894a89 *src/include/ANN/ANN.h
+2e54254381f9d13024a9afbd614ab0fb *src/include/ANN/ANN.h
 01e516b35b438e720b5dcf2763c4ab06 *src/include/ANN/ANNperf.h
 02390a8bf15826c45a3828a73c017b47 *src/include/ANN/ANNx.h
 b9d7dc82b47ff6c92279cf9876cd5b0a *src/init_FNN.c
@@ -52,7 +52,7 @@ b47abdfff22634cf17de609bd4e3c449 *src/kd_search.cpp
 f9f569b4ba82fe3ace85e593d7775990 *src/kd_util.cpp
 d412681fdefb6fad8061db1c69d88a4e *src/kd_util.h
 8f00f3c4442df358476f0a72fc4b390a *src/label_point.cpp
-ff0c453287c2aa60e3bedccdc7cd0062 *src/label_point.h
+e6b13cd04192b46d06d4376421019d50 *src/label_point.h
 8fe10f3ab5d7f77254ce219d65690065 *src/perf.cpp
 bddf592cc6650ebaa815338ad8a0fb63 *src/pr_queue.h
 c57d5df3e3b47a47c6776fcf57556919 *src/pr_queue_k.h

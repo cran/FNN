@@ -39,7 +39,7 @@ void mutinfo(double *XY, const int *kin, const int *n_pts, int* nx, int*ny)
 
       					pos[k] = j;
 
-      					if (nndist[kn] <= nndist[K - 1]) if (++kn == MAX_TIES - 1)  error("too many ties in knn");
+      					if (nndist[kn] <= nndist[K - 1]) if (++kn == MAX_TIES - 1)  Rf_error("too many ties in knn");
   				  	break;
   		    		}
 
@@ -108,7 +108,7 @@ void mdmutinfo(double *X, double *Y, const int *xdim, const int *ydim, const int
 
       					pos[k] = j;
 
-      					if (nndist[kn] <= nndist[K - 1])	if (++kn == MAX_TIES - 1)  error("too many ties in knn");
+      					if (nndist[kn] <= nndist[K - 1])	if (++kn == MAX_TIES - 1)  Rf_error("too many ties in knn");
   				  	  break;
   		    	}
 
